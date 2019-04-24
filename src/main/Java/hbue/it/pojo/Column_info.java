@@ -3,8 +3,6 @@ package hbue.it.pojo;
 public class Column_info {
     private Integer id;
 
-    private Integer cid;
-
     private Integer sequence;
 
     private String name;
@@ -19,14 +17,6 @@ public class Column_info {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public Integer getCid() {
-        return cid;
-    }
-
-    public void setCid(Integer cid) {
-        this.cid = cid;
     }
 
     public Integer getSequence() {

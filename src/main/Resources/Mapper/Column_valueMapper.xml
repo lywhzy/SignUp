@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hbue.it.mapper.Column_valueMapper">
+  <resultMap id="BaseResultMap" type="hbue.it.pojo.Column_value">
+    <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="value" jdbcType="VARCHAR" property="value" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    Id, value, uid, cid
+  </sql>
+  <select id="selectByExample" parameterType="hbue.it.pojo.Column_valueExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from column_value
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from column_value
+    where Id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from column_value
+    where Id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="Id" keyProperty="id" parameterType="hbue.it.pojo.Column_value" useGeneratedKeys="true">
+    insert into column_value (value, uid, cid
+      )
+    values (#{value,jdbcType=VARCHAR}, #{uid,jdbcType=INTEGER}, #{cid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="Id" keyProperty="id" parameterType="hbue.it.pojo.Column_value" useGeneratedKeys="true">
+    insert into column_value
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="value != null">
+        value,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="hbue.it.pojo.Column_value">
+    update column_value
+    <set>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hbue.it.pojo.Column_value">
+    update column_value
+    set value = #{value,jdbcType=VARCHAR},
+      uid = #{uid,jdbcType=INTEGER},
+      cid = #{cid,jdbcType=INTEGER}
+    where Id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

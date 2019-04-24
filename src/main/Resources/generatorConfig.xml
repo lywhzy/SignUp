@@ -13,8 +13,8 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
 
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/signup" userId="root"
-                        password="970926">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost/signup" userId="nb"
+                        password="654321">
         </jdbcConnection>
 
         <javaTypeResolver>

@@ -3,6 +3,7 @@
 <mapper namespace="hbue.it.mapper.Column_infoMapper">
   <resultMap id="BaseResultMap" type="hbue.it.pojo.Column_info">
     <id column="Id" jdbcType="INTEGER" property="id" />
+    <result column="cid" jdbcType="INTEGER" property="cid" />
     <result column="sequence" jdbcType="INTEGER" property="sequence" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="icontype" jdbcType="VARCHAR" property="icontype" />
@@ -38,7 +39,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    Id, sequence, name, icontype, choose
+    Id, cid, sequence, name, icontype, choose
   </sql>
   <select id="selectByExample" parameterType="hbue.it.pojo.Column_infoExample" resultMap="BaseResultMap">
     select
@@ -66,14 +67,17 @@
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" keyColumn="Id" keyProperty="id" parameterType="hbue.it.pojo.Column_info" useGeneratedKeys="true">
-    insert into column_info (sequence, name, icontype, 
-      choose)
-    values (#{sequence,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{icontype,jdbcType=VARCHAR}, 
-      #{choose,jdbcType=BIT})
+    insert into column_info (cid, sequence, name, 
+      icontype, choose)
+    values (#{cid,jdbcType=INTEGER}, #{sequence,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{icontype,jdbcType=VARCHAR}, #{choose,jdbcType=BIT})
   </insert>
   <insert id="insertSelective" keyColumn="Id" keyProperty="id" parameterType="hbue.it.pojo.Column_info" useGeneratedKeys="true">
     insert into column_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
       <if test="sequence != null">
         sequence,
       </if>
@@ -88,6 +92,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
       <if test="sequence != null">
         #{sequence,jdbcType=INTEGER},
       </if>
@@ -105,6 +112,9 @@
   <update id="updateByPrimaryKeySelective" parameterType="hbue.it.pojo.Column_info">
     update column_info
     <set>
+      <if test="cid != null">
+        cid = #{cid,jdbcType=INTEGER},
+      </if>
       <if test="sequence != null">
         sequence = #{sequence,jdbcType=INTEGER},
       </if>
@@ -122,7 +132,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="hbue.it.pojo.Column_info">
     update column_info
-    set sequence = #{sequence,jdbcType=INTEGER},
+    set cid = #{cid,jdbcType=INTEGER},
+      sequence = #{sequence,jdbcType=INTEGER},
       name = #{name,jdbcType=VARCHAR},
       icontype = #{icontype,jdbcType=VARCHAR},
       choose = #{choose,jdbcType=BIT}

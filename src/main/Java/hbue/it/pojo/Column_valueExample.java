@@ -353,66 +353,6 @@ public class Column_valueExample {
             addCriterion("cid not between", value1, value2, "cid");
             return (Criteria) this;
         }
-
-        public Criteria andConidIsNull() {
-            addCriterion("conid is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidIsNotNull() {
-            addCriterion("conid is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidEqualTo(Integer value) {
-            addCriterion("conid =", value, "conid");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidNotEqualTo(Integer value) {
-            addCriterion("conid <>", value, "conid");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidGreaterThan(Integer value) {
-            addCriterion("conid >", value, "conid");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidGreaterThanOrEqualTo(Integer value) {
-            addCriterion("conid >=", value, "conid");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidLessThan(Integer value) {
-            addCriterion("conid <", value, "conid");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidLessThanOrEqualTo(Integer value) {
-            addCriterion("conid <=", value, "conid");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidIn(List<Integer> values) {
-            addCriterion("conid in", values, "conid");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidNotIn(List<Integer> values) {
-            addCriterion("conid not in", values, "conid");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidBetween(Integer value1, Integer value2) {
-            addCriterion("conid between", value1, value2, "conid");
-            return (Criteria) this;
-        }
-
-        public Criteria andConidNotBetween(Integer value1, Integer value2) {
-            addCriterion("conid not between", value1, value2, "conid");
-            return (Criteria) this;
-        }
     }
 
     public static class Criteria extends GeneratedCriteria {

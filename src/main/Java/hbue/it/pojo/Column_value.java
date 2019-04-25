@@ -9,8 +9,6 @@ public class Column_value {
 
     private Integer cid;
 
-    private Integer conid;
-
     public Integer getId() {
         return id;
     }
@@ -41,13 +39,5 @@ public class Column_value {
 
     public void setCid(Integer cid) {
         this.cid = cid;
-    }
-
-    public Integer getConid() {
-        return conid;
-    }
-
-    public void setConid(Integer conid) {
-        this.conid = conid;
     }
 }

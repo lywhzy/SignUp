@@ -2,6 +2,9 @@ package hbue.it.mapper;
 
 import hbue.it.pojo.Contest;
 import hbue.it.pojo.ContestExample;
+import hbue.it.pojo.User;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface ContestMapper {
@@ -18,4 +21,8 @@ public interface ContestMapper {
     int updateByPrimaryKeySelective(Contest record);
 
     int updateByPrimaryKey(Contest record);
+
+    List<Contest> selectByUserId(int uid);
+
+    void deleteContestRelation(@Param("cid") int cid, @Param("uid") int uid);
 }

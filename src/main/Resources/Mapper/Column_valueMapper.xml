@@ -117,4 +117,8 @@
       cid = #{cid,jdbcType=INTEGER}
     where Id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <delete id="deleteByUCId">
+    delete cv.* from column_value cv,column_info ci where cv.uid=#{uid} and cv.cid=ci.id and ci.cid=#{cid}
+  </delete>
 </mapper>

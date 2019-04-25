@@ -2,6 +2,8 @@ package hbue.it.mapper;
 
 import hbue.it.pojo.Column_value;
 import hbue.it.pojo.Column_valueExample;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 
 public interface Column_valueMapper {
@@ -18,4 +20,6 @@ public interface Column_valueMapper {
     int updateByPrimaryKeySelective(Column_value record);
 
     int updateByPrimaryKey(Column_value record);
+
+    void deleteByUCId(@Param("uid") int uid, @Param("cid") int cid);
 }

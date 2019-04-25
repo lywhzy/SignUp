@@ -9,6 +9,22 @@
     <result column="begindate" jdbcType="DATE" property="begindate" />
     <result column="enddate" jdbcType="DATE" property="enddate" />
   </resultMap>
+  <resultMap id="getContestMap" type="Contest">
+    <id column="id" property="id"></id>
+    <result column="name" property="name"></result>
+    <result column="characterization" property="characterization"></result>
+    <result column="attachment" property="attachment"></result>
+    <result column="begindate" property="begindate"></result>
+    <result column="enddate" property="enddate"></result>
+    <collection property="users" ofType="User">
+      <id column="id" property="id"></id>
+      <result column="name" property="name"></result>
+      <result column="phoneNumber" property="phoneNumber"></result>
+      <result column="email" property="email"></result>
+      <result column="password" property="password"></result>
+      <result column="level" property="level"></result>
+    </collection>
+  </resultMap>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -139,4 +155,12 @@
       enddate = #{enddate,jdbcType=DATE}
     where Id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="getContestMap">
+      select  c.* from contest c,user_contest uc where uc.uid=#{uid} and uc.cid=c.id
+  </select>
+
+  <delete id="deleteContestRelation">
+      delete from user_contest where #{cid}=cid and #{uid}=uid
+  </delete>
 </mapper>

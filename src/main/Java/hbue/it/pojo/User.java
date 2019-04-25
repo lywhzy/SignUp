@@ -1,5 +1,7 @@
 package hbue.it.pojo;
 
+import java.util.List;
+
 public class User {
     private Integer id;
 
@@ -12,6 +14,16 @@ public class User {
     private String password;
 
     private Integer level;
+
+    private List<Contest> contests;
+
+    public List<Contest> getContests() {
+        return contests;
+    }
+
+    public void setContests(List<Contest> contests) {
+        this.contests = contests;
+    }
 
     public Integer getId() {
         return id;

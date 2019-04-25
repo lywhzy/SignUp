@@ -37,6 +37,15 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="typeAliasesPackage" value="hbue.it.pojo"/>
         <property name="mapperLocations" value="classpath:Mapper/*.xml"/>
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <property name="properties">
+                        <value/>
+                    </property>
+                </bean>
+            </array>
+        </property>
     </bean>
 
     <bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">

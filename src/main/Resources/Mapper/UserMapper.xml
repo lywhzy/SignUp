@@ -139,4 +139,5 @@
       level = #{level,jdbcType=INTEGER}
     where Id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>

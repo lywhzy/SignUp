@@ -1,6 +1,7 @@
 package hbue.it.pojo;
 
 import java.util.Date;
+import java.util.List;
 
 public class Contest {
     private Integer id;
@@ -14,6 +15,28 @@ public class Contest {
     private Date begindate;
 
     private Date enddate;
+
+    private List<User> users;
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    @Override
+    public String toString() {
+        return "Contest{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", characterization='" + characterization + '\'' +
+                ", attachment=" + attachment +
+                ", begindate=" + begindate +
+                ", enddate=" + enddate +
+                '}';
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 
     public Integer getId() {
         return id;

@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -36,6 +37,7 @@ public class MyContestServiceImpl implements MyContestService {
         }
         PageUtil.setPage(start);
         List<Contest> list = contestMapper.selectByUserId(uid);
+        setContestStatus(list);
         return list;
     }
 
@@ -61,5 +63,17 @@ public class MyContestServiceImpl implements MyContestService {
     @Override
     public void update(int uid, int cid) {
 
+    }
+
+    private void setContestStatus(List<Contest> list){
+        for(Contest contest : list){
+            if(new Date().before(contest.getBegindate())){
+                contest.setStatus(this.NotOpen);
+            }else if(new Date().before(contest.getEnddate())){
+                contest.setStatus(this.SIGNING);
+            }else{
+                contest.setStatus(this.SIGNED);
+            }
+        }
     }
 }

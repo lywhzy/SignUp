@@ -18,6 +18,16 @@ public class Contest {
 
     private List<User> users;
 
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public List<User> getUsers() {
         return users;
     }

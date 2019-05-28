@@ -31,7 +31,7 @@ public class SignUpServiceImplTest {
         ApplicationContext context = new ClassPathXmlApplicationContext("Spring/ApplicationContext.xml");
         SignUpService signUpService = context.getBean(SignUpServiceImpl.class);
         System.out.println(signUpService.sychroData(1,"手机号"));
-        System.out.println(signUpService.sychroData(1,1,"1"));
+        //System.out.println(signUpService.sychroData(1,1,"1"));
     }
 
     @Test

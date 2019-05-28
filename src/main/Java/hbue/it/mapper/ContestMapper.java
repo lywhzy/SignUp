@@ -25,4 +25,6 @@ public interface ContestMapper {
     List<Contest> selectByUserId(int uid);
 
     void deleteContestRelation(@Param("cid") int cid, @Param("uid") int uid);
+
+    List<Contest> getTopCharacterization();
 }

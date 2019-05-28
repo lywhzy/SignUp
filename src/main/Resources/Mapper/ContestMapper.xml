@@ -163,4 +163,8 @@
   <delete id="deleteContestRelation">
       delete from user_contest where #{cid}=cid and #{uid}=uid
   </delete>
+
+  <select id="getTopCharacterization" resultType="Contest">
+      select c2.* from contest c2,user_contest uc where c2.id=uc.cid and c2.enddate>now() group by c2.id order by count(c2.id) desc limit 0,3
+  </select>
 </mapper>

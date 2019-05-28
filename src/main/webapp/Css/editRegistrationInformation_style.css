@@ -3,10 +3,10 @@
     padding: 0px;
     margin: 0px;
 }
-body{
+html,body{
     height: 900px;
     width: 100%;
-    background-color: #2a2a2a;
+    background-color: black;
     /*color: white;*/
 }
 #container{
@@ -16,11 +16,12 @@ body{
     background-color: white;
     /*opacity: 0.8;*/
     border-radius: 10px;
-    box-shadow: 0px 1px 2px black;
+    /*box-shadow: 0px 1px 2px black;*/
 }
 #logo{
     width: 100%;
     height: 113px;
+    border-bottom: 1px solid black;
     /*background: red;*/
 }
 #logoimg{
@@ -29,84 +30,97 @@ body{
 #content{
     float: left;
     width: 100%;
-    height: 84%;
-    background-color: #fbf8ff;
-    border-top: 1px solid black;
+    height: 86%;
+    /*background-color: #fbf8ff;*/
+    /*border-top: 1px solid black;*/
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
-#navigationdiv {
-    position: relative;
-    float: left;
-    width: 18%;
-    /*background-color: #f2fffc;*/
-}
-#headPortrait{
-    height: 60px;
-    width: 60px;
-    border-radius: 30px;
-    margin: 25px auto 5px auto;
-}
-#navigation_bar{
-    list-style: none;
-}
-ul li{
-    display: block;
-    float: left;
-    height: 50px;
-    width: 100%;
-    line-height: 52px;
-}
-#competitionList_a,#edit_a{
-    display: block;
-    width: 100%;
-    height: 50px;
-    text-align: center;
-    font-weight:bold;
-    color: #1b6d85;
-    /*background-color: red;*/
-    /*margin: 10px auto 5px auto;*/
 
-    font-size: 20px;
-}
-a:link{                    /*初始状态*/
-    text-decoration: none;
-    color: #1b6d85;
-}
-/*a:visited{*/                     /*已访问状态*/
-
-/*}*/
-a:hover{                /*鼠标在上面的状态*/
-    background-color: white;
-    /*border: 1px solid #c7ddef;*/
-    border-radius: 2px;
-}
-a:active{                      /*正在点击的状态*/
-    /*text-decoration: inherit;*/
-    background-color: white;
-    /*border: 1px solid #c7ddef;*/
-    /*border-radius: 10px;*/
-    color: #1b8f85;
-}
-#edit_a{
-    background-color: white;
-    box-shadow: 1px -1px 2px gainsboro inset;
-}
-#detail{
-    background-color: white;
-    float: left;
-    height: 100%;
-    width: 82%;
-    border-bottom-right-radius: 10px;
-}
-#detail p{
-    text-align: left;
-    /*background-color: red;*/
-    height: 30px;
-    margin:4px auto 4px 200px;
+#logo p{
+    float: right;
+    font-size: 18px;
     font-family: 微软雅黑;
-    font-size: 20px;
+    margin: 80px 50px auto auto;
 }
+#logo button{
+    float: right;
+    background-color: white;
+    color: #b10903;
+    text-decoration: underline;
+}
+/*#navigationdiv {*/
+    /*position: relative;*/
+    /*float: left;*/
+    /*width: 18%;*/
+    /*!*background-color: #f2fffc;*!*/
+/*}*/
+/*#headPortrait{*/
+    /*height: 60px;*/
+    /*width: 60px;*/
+    /*border-radius: 30px;*/
+    /*margin: 25px auto 5px auto;*/
+/*}*/
+/*#navigation_bar{*/
+    /*list-style: none;*/
+/*}*/
+/*ul li{*/
+    /*display: block;*/
+    /*float: left;*/
+    /*height: 50px;*/
+    /*width: 100%;*/
+    /*line-height: 52px;*/
+/*}*/
+/*#competitionList_a,#edit_a{*/
+    /*display: block;*/
+    /*width: 100%;*/
+    /*height: 50px;*/
+    /*text-align: center;*/
+    /*font-weight:bold;*/
+    /*color: #1b6d85;*/
+    /*!*background-color: red;*!*/
+    /*!*margin: 10px auto 5px auto;*!*/
+
+    /*font-size: 20px;*/
+/*}*/
+/*a:link{                    !*初始状态*!*/
+    /*text-decoration: none;*/
+    /*color: #1b6d85;*/
+/*}*/
+/*!*a:visited{*!                     !*已访问状态*!*/
+
+/*!*}*!*/
+/*a:hover{                !*鼠标在上面的状态*!*/
+    /*background-color: white;*/
+    /*!*border: 1px solid #c7ddef;*!*/
+    /*border-radius: 2px;*/
+/*}*/
+/*a:active{                      !*正在点击的状态*!*/
+    /*!*text-decoration: inherit;*!*/
+    /*background-color: white;*/
+    /*!*border: 1px solid #c7ddef;*!*/
+    /*!*border-radius: 10px;*!*/
+    /*color: #1b8f85;*/
+/*}*/
+/*#edit_a{*/
+    /*background-color: white;*/
+    /*box-shadow: 1px -1px 2px gainsboro inset;*/
+/*}*/
+/*#detail{*/
+    /*background-color: white;*/
+    /*float: left;*/
+    /*height: 100%;*/
+    /*width: 82%;*/
+    /*border-bottom-right-radius: 10px;*/
+/*}*/
+/*#detail p{*/
+    /*text-align: left;*/
+    /*!*background-color: red;*!*/
+    /*height: 30px;*/
+    /*margin:4px auto 4px 200px;*/
+    /*font-family: 微软雅黑;*/
+    /*font-size: 20px;*/
+/*}*/
 
 #large-header{
     position: absolute;

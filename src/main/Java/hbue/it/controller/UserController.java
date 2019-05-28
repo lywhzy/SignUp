@@ -1,8 +1,11 @@
 package hbue.it.controller;
 
+import hbue.it.exception.ContestNotFoundException;
+import hbue.it.pojo.Alternative;
 import hbue.it.pojo.Column_info;
 import hbue.it.pojo.Contest;
 import hbue.it.pojo.User;
+import hbue.it.service.HomeService;
 import hbue.it.service.MyContestService;
 import hbue.it.service.SignUpService;
 import org.apache.commons.io.FileUtils;
@@ -14,12 +17,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.util.List;
 
@@ -30,6 +35,9 @@ public class UserController {
 
     @Autowired
     private SignUpService signUpService;
+    @Autowired
+    private HomeService homeService;
+
 
     @RequestMapping("listMyContest")
     public String listMyContest(User user, Model model){
@@ -79,6 +87,28 @@ public class UserController {
         ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(FileUtils.readFileToByteArray(file), headers, httpStatus);
         return response;
     }
+
+    @RequestMapping("getCharacterization")
+    @ResponseBody
+    public List<Contest> getTopContest(){
+        List<Contest> list = homeService.getTopCharacterization();
+        return list;
+    }
+
+    @RequestMapping(value = "getValue",produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String getColumn_value(int uid,int cid) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
+        String value = signUpService.sychroData(uid, cid);
+        return value;
+    }
+
+    @RequestMapping(value = "getAlternative")
+    @ResponseBody
+    public List<Alternative> getAlternative(int cid) throws ContestNotFoundException {
+        List<Alternative> list = signUpService.listAlternativeByCid(cid);
+        return list;
+    }
+
 
 
     private String getBrowser(HttpServletRequest request){

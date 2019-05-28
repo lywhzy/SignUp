@@ -26,6 +26,8 @@ public class SignUpServiceImpl implements SignUpService {
     private Column_infoMapper column_infoMapper;
     @Autowired
     private ContestMapper contestMapper;
+    @Autowired
+    private AlternativeMapper alternativeMapper;
 
     static ConcurrentHashMap<String,String> keyName = null;
 
@@ -83,27 +85,21 @@ public class SignUpServiceImpl implements SignUpService {
     /**
      *
      * @param uid 用户id
-     * @param cid 比赛id
-     * @param key 栏目名称
+     * @param cid 栏目id
      * @return  同步非通用的栏目值（修改报名时以及非第一次报名时用 此时通用信息以存入栏目值表）
      * @throws NoSuchMethodException
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
     @Override
-    public String sychroData(int uid, int cid, String key) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Column_infoExample column_infoExample = new Column_infoExample();
-        column_infoExample.createCriteria()
-                .andCidEqualTo(cid)
-                .andNameEqualTo(key);
-        List<Column_info> list = column_infoMapper.selectByExample(column_infoExample);
+    public String sychroData(int uid, int cid) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
 
         Column_valueExample column_valueExample = new Column_valueExample();
         column_valueExample.createCriteria()
-                .andCidEqualTo(list.get(0).getId())
+                .andCidEqualTo(cid)
                 .andUidEqualTo(uid);
         List<Column_value> vlist = column_valueMapper.selectByExample(column_valueExample);
-
+        if(vlist==null||vlist.size()==0) return null;
         return vlist.get(0).getValue();
     }
 
@@ -117,7 +113,17 @@ public class SignUpServiceImpl implements SignUpService {
         Column_infoExample column_infoExample = new Column_infoExample();
         column_infoExample.createCriteria()
                 .andCidEqualTo(cid);
+        column_infoExample.setOrderByClause("sequence asc");
         return column_infoMapper.selectByExample(column_infoExample);
+    }
+
+    @Override
+    public List<Alternative> listAlternativeByCid(int cid) throws ContestNotFoundException {
+        AlternativeExample alternativeExample = new AlternativeExample();
+        alternativeExample.createCriteria()
+                .andCidEqualTo(cid);
+        List<Alternative> list = alternativeMapper.selectByExample(alternativeExample);
+        return list;
     }
 
     @Override

@@ -11,6 +11,7 @@
 <%@include file="../include/adminHead.jsp"%>
 
 <link rel="stylesheet" href="${pageContext.request.contextPath}/Css/myCompetition_style.css" type="text/css">
+<script src="${pageContext.request.contextPath}/Js/myCompitition.js"></script>
 
 <script>
     $(function () {
@@ -45,58 +46,38 @@
 <div id="container">
     <div id="logo">
         <img id="logoimg" src="${pageContext.request.contextPath}/img/logo1.png">
+        <p>${user.name}，<button id="exit">退出</button></p>
     </div>
+    <h2 align="center" id="h4">您的比赛信息如下</h2>
     <div id="content">
-        <!--左边的导航栏-->
-        <div id="navigationdiv">
-            <p align="center">
-                <img id="headPortrait" src="${pageContext.request.contextPath}/img/girl.png"><br />
-                <span>ID:</span>
-                <!--此处添加id号-->
-                <span>270625</span>
-            </p>
-            <ul id="navigation_bar">
-                <li class="li">
-                    <!--<div>-->
-                    <a id="competitionList_a" class="a" href="listMyContest">比赛列表</a>
-                    <!--</div>-->
-
-                </li>
-                <li class="li">
-                    <a id="edit_a" class="a" href="editMyContest">编辑报名信息</a>
-                </li>
-            </ul>
-        </div>
-        <!--右边的详细内容-->
-        <div id="detail">
-            <br /><br /><br /><br />
-            <%--<p align="center" style="font-size: 30px">暂无比赛！快去报名吧</p>--%>
-            <table class="table table-striped table-bordered table-hover  table-condensed">
-                <thead>
-                    <tr class="warning">
-                        <th>比赛名称</th>
-                        <th>比赛状态</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <c:forEach items="${list}" var="con">
-                        <tr id="${con.id}">
-                            <td>${con.name}
-                                <a href="editMyContest?uid=${user.id}&cid=${con.id}" class="a1" value="${con.status}">
-                                    <span class="glyphicon glyphicon-edit"></span>
-                                </a>
-                            </td>
-                            <td>
-                                <span>${con.status}</span>
-                            </td>
-                            <td>
-                                <a href="downLoad?attachment=${con.attachment}&name=${con.name}" class="a2" value="${con.attachment}">下载</a>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-        </div>
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th>比赛名称</th>
+                    <th>比赛状态</th>
+                    <th>比赛附件</th>
+                </tr>
+            </thead>
+            <tbody>
+            <c:forEach items="${list}" var="con">
+                <tr id="${con.id}">
+                    <td>${con.name}
+                        <a href="editMyContest?uid=${user.id}&cid=${con.id}" class="a1" value="${con.status}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
+                    <td>
+                        <span>${con.status}</span>
+                    </td>
+                    <td>
+                        <a href="downLoad?attachment=${con.attachment}&name=${con.name}" class="a2" value="${con.attachment}">
+                            <span class="glyphicon glyphicon-download-alt"></span>${con.name}
+                        </a>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
     </div>
 </div>
 

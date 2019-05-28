@@ -337,8 +337,29 @@
             <version>4.0.4.RELEASE</version>
 
         </dependency>
-    </dependencies>
 
+        <!--json支持-->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20160810</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.5</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <finalName>SignUp</finalName>
@@ -388,6 +409,12 @@
         <resources>
             <resource>
                 <directory>webapp/File</directory>
+                <includes>
+                    <include>*.*</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>webapp/img</directory>
                 <includes>
                     <include>*.*</include>
                 </includes>

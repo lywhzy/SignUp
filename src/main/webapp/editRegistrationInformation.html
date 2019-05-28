@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="Css/bootstrap/3.3.6/bootstrap.css">
     <script src="Js/jquery.min.js"></script>
     <script src="Js/bootstrap.min.js"></script>
+    <script src="Js/editRegistrationInformation.js"></script>
     <link rel="stylesheet" href="Css/editRegistrationInformation_style.css" type="text/css">
 </head>
 <body>
@@ -27,72 +28,14 @@
         <img id="logoimg" src="img/logo1.png">
     </div>
     <div id="content">
-        <!--左边的导航栏-->
-        <div id="navigationdiv">
-            <p align="center">
-                <img id="headPortrait" src="img/girl.png"><br />
-                <span>ID:</span>
-                <!--此处添加id号-->
-                <span>270625</span>
-            </p>
-            <ul id="navigation_bar">
-                <li class="li">
-                    <!--<div>-->
-                    <a id="competitionList_a" class="a" href="myCompetition.html">比赛列表</a>
-                    <!--</div>-->
+        <button type="button" class="btn btn-default" id="addInput">添加文本框</button>
+        <button type="button" class="btn btn-default" id="addRadio">添加单选框</button>
+        <button type="button" class="btn btn-default" id="addoption">添加下拉框</button>
+        <form id="form">
+            <table class="table table-hover table-bordered">
 
-                </li>
-                <li class="li">
-                    <a id="edit_a" class="a" href="editRegistrationInformation.html">编辑报名信息</a>
-                </li>
-            </ul>
-        </div>
-        <!--右边的详细内容-->
-        <div id="detail">
-            <br /><br /><br /><br />
-            <div>
-                <p>
-                    <span>学<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>号</span>
-                    <span>&nbsp;&nbsp;</span>
-                    <span>16160319</span>
-                </p>
-            </div>
-            <div>
-                <p>
-                    <span>姓<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>名</span>
-                    <span>&nbsp;&nbsp;</span>
-                    <span>黄紫移</span>
-                </p>
-            </div>
-            <div>
-                <p>
-                    <span>班<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>级</span>
-                    <span>&nbsp;&nbsp;</span>
-                    <span>计科Q1641</span>
-                </p>
-            </div>
-            <div>
-                <p>
-                    <span>专<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>业</span>
-                    <span>&nbsp;&nbsp;</span>
-                    <span>计算机与科学技术</span>
-                </p>
-            </div>
-            <div>
-                <p>
-                    <span>入学年份</span>
-                    <span>&nbsp;&nbsp;</span>
-                    <span>2016年</span>
-                </p>
-            </div>
-            <div>
-                <p>
-                    <span>手<span>&nbsp;</span>机<span>&nbsp;&nbsp;</span>号</span>
-                    <span>&nbsp;&nbsp;</span>
-                    <span>18827326212</span>
-                </p>
-            </div>
-        </div>
+            </table>
+        </form>
     </div>
 </div>
 </body>

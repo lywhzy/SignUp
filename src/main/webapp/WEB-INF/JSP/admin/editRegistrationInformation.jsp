@@ -25,42 +25,35 @@
 <div id="container">
     <div id="logo">
         <img id="logoimg" src="${pageContext.request.contextPath}/img/logo1.png">
+        <p>黄紫移，<button id="exit">退出</button></p>
     </div>
     <div id="content">
-        <!--左边的导航栏-->
-        <div id="navigationdiv">
-            <p align="center">
-                <img id="headPortrait" src="${pageContext.request.contextPath}/img/girl.png"><br />
-                <span>ID:</span>
-                <!--此处添加id号-->
-                <span>270625</span>
-            </p>
-            <ul id="navigation_bar">
-                <li class="li">
-                    <!--<div>-->
-                    <a id="competitionList_a" class="a" href="listMyContest">比赛列表</a>
-                    <!--</div>-->
-
-                </li>
-                <li class="li">
-                    <a id="edit_a" class="a" href="${pageContext.request.contextPath}/editRegistrationInformation.html">编辑报名信息</a>
-                </li>
-            </ul>
-        </div>
-        <!--右边的详细内容-->
-        <div id="detail">
-            <table class="table table-striped table-bordered table-hover  table-condensed">
-                <tbody>
-                <c:forEach items="${list}" var="ci">
+        <form id="form">
+            <table class="table table-hover table-bordered">
+                <c:forEach items="${list}" var="ci" varStatus="st">
                     <tr>
-                        <td><span class="span">${ci.name}</span></td>
-                        <td class="addIcon" type="${ci.icontype}" name="${ci.name}"></td>
+                        <td>${ci.name}</td>
+                        <td id="${st.count}">
+                            <c:if test="${ci.icontype.equals('文本框')}">
+                                <script>
+                                    addI(${st.count},${ci.id});
+                                </script>
+                            </c:if>
+                            <c:if test="${ci.icontype.equals('下拉框')}">
+                                <script>
+                                    addO(${st.count},${ci.id});
+                                </script>
+                            </c:if>
+                            <c:if test="${ci.icontype.equals('单选框')}">
+                                <script>
+                                    addR(${st.count},${ci.id});
+                                </script>
+                            </c:if>
+                        </td>
                     </tr>
                 </c:forEach>
-
-                </tbody>
             </table>
-        </div>
+        </form>
     </div>
 </div>
 

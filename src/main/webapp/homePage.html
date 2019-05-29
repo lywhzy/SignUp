@@ -9,6 +9,22 @@
     <link rel="stylesheet" href="Css/bootstrap/3.3.6/bootstrap.min.css">
     <script src="Js/jquery.min.js"></script>
     <script src="Js/bootstrap.min.js"></script>
+
+    <script>
+        $(function () {
+            $("button").click(function () {
+                $.ajax({
+                    url:"isLogin",
+                    dataType:"json",
+                    type:"post",
+                    success:function (data) {
+                        $("#msg").html(data)
+                        alert(data);
+                    }
+                })
+            })
+        })
+    </script>
     <style>
         *{
             border: 0px;
@@ -108,7 +124,8 @@
             <img id="logoimg" src="img/logo1.png">
             <button type="button" class="btn btn-default">报名大赛</button>
             <button type="button" class="btn btn-default">我的大赛</button>
-            <button type="button" class="btn btn-default">登    录</button>
+            <button type="button" class="btn btn-default" a href="login.html">登    录</button>
+            <div id="msg"></div>
         </div>
         <!--轮播-->
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">

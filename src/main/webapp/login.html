@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>登录</title>
     <link rel="stylesheet" href="Css/login.css" type="text/css">
     <script src="Js/jquery.min.js"></script>
     <script src="Js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+        $(function(){
+            $.ajax({
+                url:"Login",
+                //dataType:"json",
+                type:"post",
+                async:false,
+                success:function (data) {
+                    $("#test").html(data)
+                }
+            })
+        })
+
+
+    </script>
 </head>
 
 <body id="large-header">
@@ -20,7 +36,7 @@
 
     <div class="right">
         <p style="font-size: 30px;text-align: center;margin: 20px auto;">登录</p>
-        <form action="" method="post">
+        <form action="Login" method="post">
             <div  id="form">
                 <label>用户名</label>
                 <input type="text" name="userName">

@@ -46,4 +46,64 @@
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <mybatis-spring:scan base-package="hbue.it.mapper"/>
 
+
+
+    <!--shiro框架相关-->
+    <!--配置shiro的过滤器工厂bean-->
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <!--注入安全管理器-->
+        <property name="securityManager" ref="securityManager"/>
+        <!--注入相关页面访问url-->
+        <property name="loginUrl" value="/login.html" />
+
+        <!--注入url拦截规则-->
+        <property name="filterChainDefinitions">
+            <value>
+                /Css/**=anon
+                /Js/**=anon
+                /img/**=anon
+                /index.jsp*=anon
+                /login.html=anon
+                /homePage.html=anon
+                /courierAction_pageQuery*=perms["courier:list"]
+                /pages/base/courier.jsp*=perms["courier:list"]
+                /** = user
+                /pay/** = authc
+
+            </value>
+        </property>
+
+    </bean>
+    <!--注册安全管理对象-->
+    <bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager">
+        <property name="realm" ref="userRealm"/>
+        <!--注入缓存管理器-->
+        <property name="cacheManager" ref="cacheManager"/>
+
+    </bean>
+    <!--自定义realm-->
+    <bean id="userRealm" class="hbue.it.config.UserRealm"></bean>
+
+    <!--手动指定cookie-->
+    <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg value="rememberMe"/>
+        <property name="httpOnly" value="true"/>
+        <property name="maxAge" value="604800"/><!-- 7天 -->
+    </bean>
+
+    <!-- rememberMe管理器 -->
+    <bean id="rememberMeManager"
+          class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+        <!--注入自定义cookie(主要是设置寿命, 默认的一年太长)-->
+        <property name="cookie" ref="rememberMeCookie"/>
+    </bean>
+
+
+    <!--注册缓存管理器: 这里用ehcache插件(已被shiro集成)-->
+    <bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <!--指定ehcache配置文件-->
+        <property name="cacheManagerConfigFile" value="classpath:ehcache.xml"/>
+    </bean>
+
+
 </beans>

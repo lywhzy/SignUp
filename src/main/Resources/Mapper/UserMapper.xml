@@ -41,6 +41,20 @@
   <sql id="Base_Column_List">
     Id, name, phoneNumber, email, password, level
   </sql>
+
+    <select id="selLogin" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from user
+        where
+        <if test="name != null">
+            name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="password != null">
+            and password = #{password,jdbcType=VARCHAR}
+        </if>
+    </select>
+
   <select id="selectByExample" parameterType="hbue.it.pojo.UserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">

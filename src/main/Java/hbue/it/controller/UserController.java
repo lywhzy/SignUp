@@ -1,10 +1,8 @@
 package hbue.it.controller;
 
 import hbue.it.exception.ContestNotFoundException;
-import hbue.it.pojo.Alternative;
-import hbue.it.pojo.Column_info;
-import hbue.it.pojo.Contest;
-import hbue.it.pojo.User;
+import hbue.it.exception.UserNotFoundException;
+import hbue.it.pojo.*;
 import hbue.it.service.HomeService;
 import hbue.it.service.MyContestService;
 import hbue.it.service.SignUpService;
@@ -107,6 +105,19 @@ public class UserController {
     public List<Alternative> getAlternative(int cid) throws ContestNotFoundException {
         List<Alternative> list = signUpService.listAlternativeByCid(cid);
         return list;
+    }
+
+    @RequestMapping("updateCv")
+    @ResponseBody
+    public String updateColumn_value(Column_value column_value){
+        try{
+            signUpService.update(column_value);
+        }catch (ContestNotFoundException e){
+            return "false";
+        }catch (UserNotFoundException e){
+            return "false";
+        }
+        return "success";
     }
 
 

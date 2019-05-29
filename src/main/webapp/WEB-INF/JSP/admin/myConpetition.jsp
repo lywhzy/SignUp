@@ -38,9 +38,9 @@
     </canvas>
 </div>
 <!-- 網狀特效1 -->
-<script src="${pageContext.request.contextPath}/Js/EasePack.min.js"></script>
-<script src="${pageContext.request.contextPath}/Js/TweenLite.min.js"></script>
-<script src="${pageContext.request.contextPath}/Js/helloweb.js"></script>
+<script src="Js/EasePack.min.js"></script>
+<script src="Js/TweenLite.min.js"></script>
+<script src="Js/helloweb.js"></script>
 <!-- 網狀特效2 -->
 <!--内容-->
 <div id="container">

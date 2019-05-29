@@ -26,15 +26,15 @@ function addI(st,id) {
     var input = $("<input>");
     var value = getValue(1,id);
     input.css({
-        "cid" : id,
         "type" : "text",
         "width" : "300px",
         "margin" : "1px auto"
     });
-    input.attr("class","ci");
-    input.addClass("form-control");
+    input.attr("class","cii");
+    input.attr("cid",id);
     input.val(value);
     td.append(input);
+
 }
 function addR(st,id){
     var td = $("#"+st);
@@ -45,9 +45,9 @@ function addR(st,id){
         if(i==0) p.innerHTML='<label>' + value.value + '</label>';
         else p.innerHTML = p.innerHTML + '<label>' + value.value + '</label>';
         if(val==value.value){
-            p.innerHTML = p.innerHTML + '<input type="radio" name="exception"' + id + ' checked="checked" cid=' + id + ' value=' + value.value + ' class="ci">';
+            p.innerHTML = p.innerHTML + '<input type="radio" name="exception"' + id + ' checked="checked" cid=' + id + ' value=' + value.value + ' class="cir">';
         } else{
-            p.innerHTML = p.innerHTML + '<input type="radio" name="exception"' + id + ' cid=' + id + ' value=' + value.value + ' class="ci">';
+            p.innerHTML = p.innerHTML + '<input type="radio" name="exception"' + id + ' cid=' + id + ' value=' + value.value + ' class="cir">';
         }
     });
     td.append(p);
@@ -55,13 +55,14 @@ function addR(st,id){
 function addO(st,id){
     var td = $("#"+st);
     var select = $("<select></select>");
+    var span = $("<span></span>");
     select.css({
-        "cid" : id,
         "width" : "300px",
         "margin" : "1px auto"
     });
     select.addClass("form-control");
-    select.attr("class","ci");
+    select.attr("class","cis");
+    select.attr("cid",id);
     var list = getAlternative(id);
     var val = getValue(1,id);
     var option = $("<option></option>").text(val);
@@ -107,8 +108,63 @@ function getAlternative(cid) {
 }
 
 $(function () {
-   var list = $(".ci");
-   $.each(list,function (i,value) {
-       console.log(value.nodeName);
+   $("input.cii").each(function () {
+       $(this).keyup(function () {
+           var value = $(this).val();
+           var cid = $(this).attr("cid");
+           var td = $(this).parent("td");
+           $.ajax({
+               url : "updateCv",
+               data : {"uid":1,"cid":cid,"value":value},
+               type : "POST",
+               success : function (data) {
+                   if(data=="success"){
+                       td.css("border","1px solid green");
+                   }else{
+                       td.css("border","1px solid red");
+                   }
+               }
+           })
+       })
+   });
+
+   $("input.cir").each(function () {
+       $(this).change(function () {
+           var value = $(this).val();
+           var cid = $(this).attr("cid");
+           var td = $(this).parent("td");
+           $.ajax({
+               url : "updateCv",
+               data : {"cid":cid,"uid":1,"value":value},
+               type : "POST",
+               success : function () {
+                   if(data=="success"){
+                       td.css("border","1px solid green");
+                   }else{
+                       td.css("border","1px solid red");
+                   }
+               }
+           })
+       })
+   });
+
+   $("select.cis").each(function () {
+       $(this).change(function () {
+           var value = $(this).val();
+           var cid = $(this).attr("cid");
+           var td = $(this).parent("td");
+           $.ajax({
+               url : "updateCv",
+               data : {"cid" : cid,"uid" : 1,"value" : value},
+               type : "POST",
+               success : function () {
+                   if(data=="success"){
+                       td.css("border","1px solid green");
+                   }else{
+                       td.css("border","1px solid red");
+                   }
+               }
+           })
+       })
    })
 });

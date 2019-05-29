@@ -121,4 +121,8 @@
   <delete id="deleteByUCId">
     delete cv.* from column_value cv,column_info ci where cv.uid=#{uid} and cv.cid=ci.id and ci.cid=#{cid}
   </delete>
+
+  <update id="updateByUCId" parameterType="Column_value">
+    update column_value set value=#{value} where uid=#{uid} and cid=#{cid}
+  </update>
 </mapper>

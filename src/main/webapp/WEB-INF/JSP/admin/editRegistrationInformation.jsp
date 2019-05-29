@@ -32,8 +32,8 @@
             <table class="table table-hover table-bordered">
                 <c:forEach items="${list}" var="ci" varStatus="st">
                     <tr>
-                        <td>${ci.name}</td>
-                        <td id="${st.count}">
+                        <td align="right">${ci.name}</td>
+                        <td id="${st.count}" align="center">
                             <c:if test="${ci.icontype.equals('文本框')}">
                                 <script>
                                     addI(${st.count},${ci.id});
@@ -56,10 +56,5 @@
         </form>
     </div>
 </div>
-
-
-
-
-
 
 <%@include file="../include/adminFoot.jsp"%>

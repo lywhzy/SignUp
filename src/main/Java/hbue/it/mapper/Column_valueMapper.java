@@ -22,4 +22,6 @@ public interface Column_valueMapper {
     int updateByPrimaryKey(Column_value record);
 
     void deleteByUCId(@Param("uid") int uid, @Param("cid") int cid);
+
+    void updateByUCId(Column_value column_value);
 }

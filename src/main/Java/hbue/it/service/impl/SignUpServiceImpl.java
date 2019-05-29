@@ -129,7 +129,7 @@ public class SignUpServiceImpl implements SignUpService {
     @Override
     public void update(Column_value column_value) throws UserNotFoundException,ContestNotFoundException{
         judgeUserAndContest(column_value);
-        column_valueMapper.updateByPrimaryKeySelective(column_value);
+        column_valueMapper.updateByUCId(column_value);
     }
 
     private void judgeUserAndContest(Column_value column_value) {

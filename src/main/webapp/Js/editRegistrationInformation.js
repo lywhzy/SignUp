@@ -47,6 +47,7 @@ function addO(){
     var option1 = $("<option></option>").text("hello1");
     var option2 = $("<option></option>").text("hello2");
     var option3 = $("<option></option>").text("hello3");
+    // var option4 = $("<option></option>").text("jfdjfajf");
     select.append(option1,option2,option3);
     form.append(select);
 }

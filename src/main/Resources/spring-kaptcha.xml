@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <description>kaptcha Configuration</description>
+    <!-- 配置验证码信息 -->
+    <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">
+        <property name="config">
+            <bean class="com.google.code.kaptcha.util.Config">
+                <constructor-arg>
+                    <props>
+                        <!--是否有边框-->
+                        <prop key="kaptcha.border">no</prop>
+                        <!--验证码宽度-->
+                        <prop key="kaptcha.image.width">85</prop>
+                        <!--验证码高度-->
+                        <prop key="kaptcha.image.height">42</prop>
+                        <!--生成验证码内容范围-->
+                        <prop key="kaptcha.textproducer.char.string">0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ</prop>
+                        <!--验证码个数-->
+                        <prop key="kaptcha.textproducer.char.length">4</prop>
+                        <!--验证码字体大小-->
+                        <prop key="kaptcha.textproducer.font.size">20</prop>
+                        <!--验证码字体颜色-->
+                        <prop key="kaptcha.textproducer.font.color">black</prop>
+                        <!--验证码字体样式-->
+                        <prop key="kaptcha.textproducer.font.names">彩云,宋体,楷体,微软雅黑</prop>
+                        <!--图片样式-->
+                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
+                        <!--session key-->
+                        <prop key="kaptcha.session.key">code</prop>
+                        <!--干扰实现类-->
+                        <prop key="kaptcha.noise.impl">com.google.code.kaptcha.impl.NoNoise</prop>
+                        <!--背景渐变开始颜色-->
+                        <prop key="kaptcha.background.clear.from">92,189,170</prop>
+                        <!--背景渐变结束颜色-->
+                        <prop key="kaptcha.background.clear.to">92,189,170</prop>
+                        <!--验证码文本字符间距-->
+                        <prop key="kaptcha.textproducer.char.space">6</prop>
+                        <!--图片样式阴影-->
+                        <prop key="kaptcha.obscurificator.impl">com.google.code.kaptcha.impl.ShadowGimpy</prop>
+                    </props>
+                </constructor-arg>
+            </bean>
+        </property>
+    </bean>
+
+</beans>

@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     public User selLogin(String name, String password) {
         User user = null;
         //userList.remove(null);
-        if (name != null && password != null){
+        if (name != null && password != null && !"".equals(name) && !"".equals(password)){
             try{
                 user = (User) userMapper.selLogin(name, password);
             }catch (Exception e){

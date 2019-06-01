@@ -11,9 +11,11 @@ import java.util.List;
 
 public interface SignUpService {
     void signUp(Column_value column_value) throws UserNotFoundException,ContestNotFoundException;
-    void update(Column_value column_value) throws UserNotFoundException,ContestNotFoundException;
+    void update(Column_value column_value,int custom) throws UserNotFoundException,ContestNotFoundException;
     String sychroData(int uid,String key) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
     String sychroData(int uid,int cid) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException;
     List<Column_info> listAllInfo(int cid) throws ContestNotFoundException;
     List<Alternative> listAlternativeByCid(int cid) throws  ContestNotFoundException;
+    void addAlternative(Alternative alternative) throws UserNotFoundException,ContestNotFoundException;
+    boolean isAddAlternative(int cid);
 }

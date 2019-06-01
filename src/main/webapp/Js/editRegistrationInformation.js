@@ -73,6 +73,8 @@ function addO(st,id){
         }
         select.append(option);
     });
+    option = $("<option></option>").text("自定义");
+    select.append(option);
     td.append(select);
 }
 
@@ -108,63 +110,109 @@ function getAlternative(cid) {
 }
 
 $(function () {
-   $("input.cii").each(function () {
-       $(this).keyup(function () {
-           var value = $(this).val();
-           var cid = $(this).attr("cid");
-           var td = $(this).parent("td");
-           $.ajax({
-               url : "updateCv",
-               data : {"uid":1,"cid":cid,"value":value},
-               type : "POST",
-               success : function (data) {
-                   if(data=="success"){
-                       td.css("border","1px solid green");
-                   }else{
-                       td.css("border","1px solid red");
-                   }
-               }
-           })
-       })
-   });
+   // $("input.cii").each(function () {
+   //     $(this).keyup(function () {
+   //         var value = $(this).val();
+   //         var cid = $(this).attr("cid");
+   //         var td = $(this).parent("td");
+   //         $.ajax({
+   //             url : "updateCv",
+   //             data : {"uid":1,"cid":cid,"value":value},
+   //             type : "POST",
+   //             success : function (data) {
+   //                 if(data=="success"){
+   //                     td.css("border","1px solid green");
+   //                 }else{
+   //                     td.css("border","1px solid red");
+   //                 }
+   //             }
+   //         })
+   //     })
+   // });
+   //
+   // $("input.cir").each(function () {
+   //     $(this).change(function () {
+   //         var value = $(this).val();
+   //         var cid = $(this).attr("cid");
+   //         var td = $(this).parent("td");
+   //         $.ajax({
+   //             url : "updateCv",
+   //             data : {"cid":cid,"uid":1,"value":value},
+   //             type : "POST",
+   //             success : function () {
+   //                 if(data=="success"){
+   //                     td.css("border","1px solid green");
+   //                 }else{
+   //                     td.css("border","1px solid red");
+   //                 }
+   //             }
+   //         })
+   //     })
+   // });
+   //
 
-   $("input.cir").each(function () {
-       $(this).change(function () {
-           var value = $(this).val();
-           var cid = $(this).attr("cid");
-           var td = $(this).parent("td");
-           $.ajax({
-               url : "updateCv",
-               data : {"cid":cid,"uid":1,"value":value},
-               type : "POST",
-               success : function () {
-                   if(data=="success"){
-                       td.css("border","1px solid green");
-                   }else{
-                       td.css("border","1px solid red");
-                   }
-               }
-           })
-       })
-   });
 
    $("select.cis").each(function () {
        $(this).change(function () {
            var value = $(this).val();
-           var cid = $(this).attr("cid");
-           var td = $(this).parent("td");
-           $.ajax({
-               url : "updateCv",
-               data : {"cid" : cid,"uid" : 1,"value" : value},
-               type : "POST",
-               success : function () {
-                   if(data=="success"){
-                       td.css("border","1px solid green");
-                   }else{
-                       td.css("border","1px solid red");
-                   }
-               }
-           })
+
+           if(value=="自定义"){
+               var td = $(this).parent("td");
+               var input = $("<input>");
+               input.css({
+                   "type" : "text",
+                   "width" : "300px",
+                   "margin" : "1px auto"
+               });
+               td.append(input);
+           }else{
+               var td = $(this).parent("td")[0];
+               var input = $(this).parent("td").children().eq(2)[0];
+               if(input!=null)
+                td.removeChild(input);
+           }
        })
-   })
+   });
+
+    $("#update").click(function () {
+        $(".cii").each(function () {
+            // console.log($(this).attr("cid"));
+            // console.log($(this).val());
+            var cid = $(this).attr("cid");
+            var value = $(this).val();
+            $.ajax({
+                url : "updateCv",
+                data : {"cid" : cid,"uid" : 1,"value" : value},
+                type : "POST",
+                success : function (data) {
+                    
+                }
+            });
+        });
+        $(".cis").each(function () {
+            var cid = $(this).attr("cid");
+            var value = $(this).val();
+            var input = $(this).parent("td").find("input");
+            if(value=="自定义"){
+                value = input.val();
+            }
+            $.ajax({
+                url : "updateCv",
+                data : {"cid" : cid,"uid" : 1,"value" : value},
+                type : "POST",
+                success : function (data) {
+
+                }
+            });
+        });
+       alert("修改成功");
+    });
+
+
+
+    $("#ex").click(function () {
+        var uid = 1;
+        window.location.replace("listMyContest?id=" + uid);
+    })
+
 });

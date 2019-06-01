@@ -29,7 +29,7 @@
     </div>
     <div id="content">
         <form id="form">
-            <table class="table table-hover table-bordered">
+            <table class="table table-hover table-bordered" width="500">
                 <c:forEach items="${list}" var="ci" varStatus="st">
                     <tr>
                         <td align="right">${ci.name}</td>
@@ -54,7 +54,15 @@
                 </c:forEach>
             </table>
         </form>
+        <div align="center">
+            <button type="button" class="btn btn-primary"  id = "update">保存</button>
+            <button type="button" class="btn btn-primary" id = "ex">返回</button>
+        </div>
     </div>
+
+
+
+
 </div>
 
 <%@include file="../include/adminFoot.jsp"%>

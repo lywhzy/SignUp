@@ -8,6 +8,8 @@ import hbue.it.service.SignUpService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -121,15 +123,43 @@ public class SignUpServiceImpl implements SignUpService {
     public List<Alternative> listAlternativeByCid(int cid) throws ContestNotFoundException {
         AlternativeExample alternativeExample = new AlternativeExample();
         alternativeExample.createCriteria()
-                .andCidEqualTo(cid);
+                .andCidEqualTo(cid)
+                .andUser_permitEqualTo(false);
         List<Alternative> list = alternativeMapper.selectByExample(alternativeExample);
         return list;
     }
 
     @Override
-    public void update(Column_value column_value) throws UserNotFoundException,ContestNotFoundException{
+    public void addAlternative(Alternative alternative) throws UserNotFoundException, ContestNotFoundException {
+        alternative.setUser_permit(true);
+        alternativeMapper.insertSelective(alternative);
+    }
+
+    @Override
+    public boolean isAddAlternative(int cid) {
+        Column_info column_info = column_infoMapper.selectByPrimaryKey(cid);
+        return column_info.getIcontype().equals("下拉框");
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED,rollbackForClassName = "Exception")
+    @Override
+    public void update(Column_value column_value,int custom) throws UserNotFoundException,ContestNotFoundException{
         judgeUserAndContest(column_value);
-        column_valueMapper.updateByUCId(column_value);
+        Column_valueExample column_valueExample = new Column_valueExample();
+        column_valueExample.createCriteria()
+                    .andUidEqualTo(column_value.getUid())
+                    .andCidEqualTo(column_value.getCid());
+        if(column_valueMapper.selectByExample(column_valueExample).isEmpty()){
+            column_valueMapper.insertSelective(column_value);
+        }else{
+            column_valueMapper.updateByUCId(column_value);
+        }
+        if(isAddAlternative(column_value.getCid())&&custom==1){
+            Alternative alternative = new Alternative();
+            alternative.setCid(column_value.getCid());
+            alternative.setValue(column_value.getValue());
+            addAlternative(alternative);
+        }
     }
 
     private void judgeUserAndContest(Column_value column_value) {

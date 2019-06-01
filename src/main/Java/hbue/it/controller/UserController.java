@@ -109,9 +109,9 @@ public class UserController {
 
     @RequestMapping("updateCv")
     @ResponseBody
-    public String updateColumn_value(Column_value column_value){
+    public String updateColumn_value(Column_value column_value,int custom){
         try{
-            signUpService.update(column_value);
+            signUpService.update(column_value,custom);
         }catch (ContestNotFoundException e){
             return "false";
         }catch (UserNotFoundException e){
@@ -119,6 +119,7 @@ public class UserController {
         }
         return "success";
     }
+
 
 
 

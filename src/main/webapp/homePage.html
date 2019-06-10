@@ -13,6 +13,74 @@
     <script src="Js/jquery-ui.min.js"></script>
     <script src="Js/homePage.js"></script>
     <link rel="stylesheet" href="Css/homePage_style.css" type="text/css">
+    <script>
+        $(function () {
+
+            $.ajax({
+                url:"isLogin",
+                type:"post",
+                async:false,
+                success:function(data){
+                    if (data != "FAIL"){
+                        //$("div > p").html(data);
+                        $("#user").html(data);
+                    }else{
+                        $("#user").html("未登录");
+                    }
+                }
+            })
+
+            $("#login").click(function () {
+                $.ajax({
+                    url:"isLogin",
+                    //dataType:"json",
+                    type:"post",
+                    async:false,
+
+                    success:function (data) {
+                        if (data == "FAIL"){
+                            /*$("div > p").html(data);
+                            setTimeout(function () { test(); }, 2000);
+                            window.location.href = "login.html";*/
+
+                            $("#ok").click(function () {
+                                var username = $("#username").val();
+                                var password = $("#password").val();
+                                $.ajax({
+                                    url:"Login",
+                                    data:{username : username, password : password},
+                                    type:"post",
+                                    async:false,
+                                    success:function (data) {
+                                        window.location.href = "homePage.jsp";
+                                    }
+                                })
+                            })
+
+                        }else {
+                            //$("div > p").html(data);
+                            $("#user").html(data);
+                        }
+                    }
+                })
+            })
+
+            $("#logout").click(function () {
+                $.ajax({
+                    url:"logout",
+                    type:"post",
+                    async:false,
+                    success:function (data) {
+                        if (data == "SUCCESS"){
+                            alert("退出成功");
+                            window.location.href = "homePage.jsp";
+                        }
+                    }
+                })
+            })
+
+        })
+    </script>
     <style>
         input{
             margin: 1px 5px;

@@ -230,7 +230,7 @@
                     </form>
                     <div style="display: none"><br/><span>验证码</span><input type="text"></div>
                     <a href="#" style="float: left;margin: 5px 4px 3px auto; font-size: 15px">忘记密码</a>
-                    <a href="#" style="float: right;margin: 5px 4px 3px auto; font-size: 15px">注册</a>
+                    <a href="register.jsp" style="float: right;margin: 5px 4px 3px auto; font-size: 15px">注册</a>
                     <br/>
                 </div>
                 <div class="modal-footer">

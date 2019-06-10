@@ -15,12 +15,10 @@
     <!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
     <title>首页</title>
     <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
-    <link rel="stylesheet" href="Css/bootstrap/3.3.6/bootstrap.min.css">
     <script src="Js/jquery.min.js"></script>
-    <script src="Js/bootstrap.min.js"></script>
-
     <link rel="stylesheet" href="Css/bootstrap/3.3.6/bootstrap.css">
     <link rel="stylesheet" href="Css/jquery-ui.min.css" type="text/css">
+    <script src="Js/bootstrap.min.js"></script>
     <script src="Js/jquery-ui.min.js"></script>
     <script src="Js/homePage.js"></script>
     <link rel="stylesheet" href="Css/homePage_style.css" type="text/css">
@@ -34,124 +32,80 @@
                 async:false,
                 success:function(data){
                     if (data != "FAIL"){
-                        $("div > p").html(data);
+                        //$("div > p").html(data);
+                        $("#user").html(data);
+                    }else{
+                        $("#user").html("未登录");
                     }
                 }
             })
 
             $("#login").click(function () {
-                var loadingIndex = null;
                 $.ajax({
                     url:"isLogin",
                     //dataType:"json",
                     type:"post",
                     async:false,
 
-                    //加载显示
-                    /*beforeSend : function(){
-                        loadingIndex = layer.msg('玩命检查是否登录中...',{icon: 16});
-                    },
-                    /*success : function(result){
-                        layer.close(loadingIndex);
-                        if(result == "FAIL"){
-                            window.location.href="login.html";
-                        }else{
-                            layer.msg("登录账号或密码不正确，请重新输入",{time:2000, icon:5,shift:6},function(){})
-                        }
-                    }*/
-
                     success:function (data) {
                         if (data == "FAIL"){
-                            $("div > p").html(data);
-                            //layer.msg("正在跳转登录界面",{time:2000, icon:5,shift:6},function(){})
+                            /*$("div > p").html(data);
                             setTimeout(function () { test(); }, 2000);
-                            window.location.href = "login.html";
+                            window.location.href = "login.html";*/
+
+                            $("#ok").click(function () {
+                                var username = $("#username").val();
+                                var password = $("#password").val();
+                                $.ajax({
+                                    url:"Login",
+                                    data:{username : username, password : password},
+                                    type:"post",
+                                    async:false,
+                                    success:function (data) {
+                                        window.location.href = "homePage.jsp";
+                                    }
+                                })
+                            })
+
                         }else {
-                            $("div > p").html(data);
+                            //$("div > p").html(data);
+                            $("#user").html(data);
                         }
                     }
                 })
             })
+
+            $("#logout").click(function () {
+                $.ajax({
+                    url:"logout",
+                    type:"post",
+                    async:false,
+                    success:function (data) {
+                        if (data == "SUCCESS"){
+                            alert("退出成功");
+                            window.location.href = "homePage.jsp";
+                        }
+                    }
+                })
+            })
+
         })
     </script>
     <style>
-        *{
-            border: 0px;
-            padding: 0px;
-            margin: 0px;
+        input{
+            margin: 1px 5px;
+            border: 1px solid gainsboro;
+            font-size: 20px;
+            border-radius: 3px;
+            box-shadow: 0px 1px 1px gray;
+            width: 200px;
         }
-        body{
-            height: 1300px;
-            width: 100%;
-            background-color: #2a2a2a;
-            /*color: white;*/
-        }
-        #container{
-            /*height: 1300px;*/
-            width: 75%;
-            margin: 1px auto 1px auto;
-            background-color: white;
-            /*opacity: 0.8;*/
-            border-radius: 10px;
-            box-shadow: 0px 1px 2px black;
-        }
-        #logo{
-            width: 100%;
-            height: 110px;
-            /*background: red;*/
-        }
-        #logoimg{
-            margin: 5px auto 5px 20px;
-        }
-
-        .btn{
-            width: 90px;
-            position: relative;
-            float: right;
-            margin: 45px 20px 2px 10px;
-        }
-        #carousel-example-generic{
-            width:100%;
-        }
-        .carousel-inner{
-            height: 500px;
-        }
-        .item{
-            height: 100%;
-            /*height: 500px;*/
-        }
-        .item img{
-            height: 100%;
-            width: 100%;
-        }
-        #introduce_container{
-            width: 100%;
-            height: 350px;
-            margin: 5px 0px;
-            background-color: red;
-        }
-        .introduce{
-            /*position: relative;*/
-            /*float: left;*/
-            width: 100px;
-            height: 100px;
-            /*margin: 15px 46px;*/
-            border: 20px solid white;
-            background: silver;
-            border-radius: 10px;
-        }
-        #large-header{
-            position: absolute;
-            left: 0px;
-            top: 0px;
-            height: 100%;
-            z-index: -2147483645;
-            /*background: none 0% 0% / auto repeat scroll padding-box border-box rgba(0, 0, 0, 0);*/
-            /*height:469px;*/
-        }
-        #demo-canvas{
-            height: 100%;
-            width: 100%;
+        input[type="text"]:focus,input[type="password"]:focus{
+            font-size: 20px;
+            margin: 1px 5px;
+            border-radius: 3px;
+            box-shadow: 1px 1px 3px #2b669a;
+            border: 1px solid cadetblue;
         }
     </style>
 </head>
@@ -173,10 +127,11 @@
 
     <div id="logo">
         <img id="logoimg" src="img/logo1.png">
-        <div id="name" class="btn btn-default"><p>未登录</p></div>
+        <a href="#" id="logout" style="float: left;margin: 5px 4px 3px auto; font-size: 15px">退出</a>
+        <a href="#" id="user" style="float: left;margin: 5px 4px 3px auto; font-size: 15px">未登录</a>
         <button type="button" class="btn btn-default">报名大赛</button>
         <button type="button" class="btn btn-default">我的大赛</button>
-        <button type="button" id="login" class="btn btn-default">登    录</button>
+        <button type="button" class="btn btn-default" id="login" data-toggle="modal" data-target="#myModal">登    录</button>
 
     </div>
     <!--轮播-->
@@ -269,9 +224,9 @@
                 </div>
                 <div class="modal-body" style="height: 150px; margin-top: 32px">
                     <form>
-                        <div align="center"><span class="glyphicon glyphicon-user"></span><input type="text"></div>
+                        <div align="center"><span class="glyphicon glyphicon-user"></span><input id="username" type="text"></div>
                         <br/>
-                        <div align="center"><span class="glyphicon glyphicon-lock"></span><input type="password"></div>
+                        <div align="center"><span class="glyphicon glyphicon-lock"></span><input id="password" type="password"></div>
                     </form>
                     <div style="display: none"><br/><span>验证码</span><input type="text"></div>
                     <a href="#" style="float: left;margin: 5px 4px 3px auto; font-size: 15px">忘记密码</a>
@@ -280,7 +235,7 @@
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default" type="button" style="float: right;margin: 2px 20px">关闭</button>
-                    <button class="btn btn-primary" type="button" style="float: left;margin: 2px 20px">确定</button>
+                    <button id="ok" class="btn btn-primary" type="button" style="float: left;margin: 2px 20px">确定</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

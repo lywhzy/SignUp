@@ -11,6 +11,7 @@ import java.util.Properties;
 
 public class JavaEmailSenderUtil {
 
+    // 向toEamilAddress发送标题为emailTitle的内容为emailContent的邮件
     public static void sendEmail(String toEmailAddress, String emailTitle, String emailContent) throws GeneralSecurityException, MessagingException {
         Properties props = new Properties();
 
@@ -53,5 +54,13 @@ public class JavaEmailSenderUtil {
         // 5.发送消息
         transport.sendMessage(msg, new Address[] { new InternetAddress(toEmailAddress)});
         transport.close();
+    }
+
+    // 向toEmailAddress发送内容为4位验证码的邮件，并返回验证码
+    public static int sendCodeEmail(String toEmailAddress, String content) throws GeneralSecurityException, MessagingException {
+        int randNum = RandomUtil.getRandNum();// 4位验证码
+        String emailContent = randNum + "" + content;
+        sendEmail(toEmailAddress, "验证码", emailContent);
+        return randNum;
     }
 }

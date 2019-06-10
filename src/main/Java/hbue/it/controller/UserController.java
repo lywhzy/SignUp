@@ -33,6 +33,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.net.CookieStore;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.util.HashMap;
@@ -58,7 +59,7 @@ public class UserController {
         User user = (User) request.getSession().getAttribute("user");
         // 验证是否包含自动登录的cookie
         Cookie[] cookies = request.getCookies();
-        String username = request.getParameter("userName");
+        //String username = request.getParameter("userName");
         String[] str = new String[10];
         User user1 = null;
         if (null != cookies){
@@ -76,6 +77,12 @@ public class UserController {
 
                 }
             }
+        }
+        if (null != user){
+            System.out.println("session");
+        }
+        if (null != user){
+            System.out.println("cookie");
         }
         if (null != user || null != user1){
             System.out.println("已登录");
@@ -95,11 +102,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/Login", method = RequestMethod.POST)
+    @ResponseBody
     public String login(HttpServletRequest request, HttpServletResponse response, Model model) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        String username = request.getParameter("userName");
+        String username = request.getParameter("username");
         String password = request.getParameter("password");
+        System.out.println(username+password);
         User user = null;
         try {
             user = userService.selLogin(username, password);
@@ -168,63 +177,104 @@ public class UserController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @ResponseBody
     public String outLogin(HttpServletRequest request, HttpServletResponse response){
         HttpSession session = request.getSession();
         if (null != session){
             try {
+                User user = (User) session.getAttribute("user");
                 // 清除session
                 session.removeAttribute("user");
+                if ((User)session.getAttribute("user") != null){
+                    System.out.println("2");
+                }
                 ServletContext application = session.getServletContext();
                 @SuppressWarnings("unchecked")
                 Map<String, Object> loginMap = (Map<String, Object>) application.getAttribute("loginMap");
-                User user = (User) session.getAttribute("user");
-                loginMap.remove(user.getId());
+
+                if (null != user){
+                    loginMap.remove(user.getId());
+                }
                 application.setAttribute("loginMap", loginMap);
                 // 修改掉客户端cookie
                 Cookie cookie = new Cookie("user", null);
                 cookie.setMaxAge(0);
                 cookie.setPath(request.getContextPath());
                 response.addCookie(cookie);
+
+                Cookie[] cookies = request.getCookies();
+                String[] str = null;
+                for (Cookie c : cookies){
+                    if ("loginCookie".equals(c.getName())){
+                        str = c.getValue().split("@");
+                        if (str[0].equals(user.getName())){
+                            c.setMaxAge(0);
+                            c.setPath(request.getContextPath());
+                            response.addCookie(c);
+
+                            if (null != c){
+                                System.out.println(c.getValue());
+                            }
+                        }
+
+                    }
+                }
+
+                for (Cookie c : cookies){
+                    if ("loginCookie".equals(c.getName())){
+                        str = c.getValue().split("@");
+                        if (str[0].equals(user.getName())){
+                                System.out.println("cookie清除");
+                        }
+
+                    }
+                }
+
+                return "SUCCESS";
             }catch (Exception e){
                 e.printStackTrace();
             }
         }
-        return "Login";
+        return "";
     }
 
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     @ResponseBody
-    public void insert(HttpServletRequest request, HttpServletResponse response, User user) throws IOException, ServletException {
+    public String insert(HttpServletRequest request, HttpServletResponse response, User user) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
-        String name = request.getParameter("userName");
-        String phoneNumber = request.getParameter("phoneNumber");
+        String name = request.getParameter("username");
+        String phoneNumber = request.getParameter("phone");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        Integer level = Integer.parseInt(request.getParameter("level"));
+
         user.setName(name);
         user.setPhoneNumber(phoneNumber);
         user.setEmail(email);
         user.setPassword(password);
-        user.setLevel(level);
-        int flag = userService.insertUser(user);
+        user.setLevel(0);
+
         // 获取验证码
-        int trueRandNum = (int) request.getAttribute("randNum");
-        String randNum = request.getParameter("idenCode");
-        //if (trueRandNum == Integer.parseInt(randNum)){
-            if (flag < 0){
+        int trueRandNum = (int) request.getSession().getAttribute("randNum");
+        String randNum = request.getParameter("code");
+        if (trueRandNum == Integer.parseInt(randNum)){
+            int flag = userService.insertUser(user);
+            if (flag > 0){
                 // 注册成功
                 System.out.println("注册成功");
-                response.sendRedirect(request.getContextPath() + "/homePage.html");
+
+                //response.sendRedirect(request.getContextPath() + "/homePage.html");
+                return "SUCCESS";
             }else {
                 // 注册失败
                 System.out.println("注册失败");
                 request.getRequestDispatcher("").forward(request, response);
+                return "FAIL";
             }
-        //}else {
-        //    System.out.println("验证码错误");
-        //    return;
-        //}
+        }else {
+            System.out.println("验证码错误");
+            return "ERROR";
+        }
 
     }
 
@@ -288,13 +338,13 @@ public class UserController {
     }
 
     @RequestMapping(value = "/mail")
+    @ResponseBody
     public String mailSucc(HttpServletRequest request) throws GeneralSecurityException, MessagingException {
         String toEMAIL = request.getParameter("email"); // 对方邮箱
-        String TITLE = "邮箱注册成功ing了"; // 标题
-        int randNum = RandomUtil.getRandNum(); // 4位验证码
-        request.setAttribute("randNum", randNum);
-        String CONTENT = toEMAIL + "你的验证码为" + randNum; // 内容
-        JavaEmailSenderUtil.sendEmail(toEMAIL, TITLE, CONTENT);
+        System.out.println(toEMAIL);
+        String content = "您正在注册成为湖北经济学院比赛报名官网用户，欢迎您的加入！";
+        int randNum = JavaEmailSenderUtil.sendCodeEmail(toEMAIL, content);
+        request.getSession().setAttribute("randNum", randNum);
         return "/mailSucc";
     }
 

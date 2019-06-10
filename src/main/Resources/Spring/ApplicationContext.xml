@@ -48,15 +48,15 @@
 
 
 
-    <!--shiro框架相关-->
-    <!--配置shiro的过滤器工厂bean-->
+    <!--&lt;!&ndash;shiro框架相关&ndash;&gt;
+    &lt;!&ndash;配置shiro的过滤器工厂bean&ndash;&gt;
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
-        <!--注入安全管理器-->
+        &lt;!&ndash;注入安全管理器&ndash;&gt;
         <property name="securityManager" ref="securityManager"/>
-        <!--注入相关页面访问url-->
+        &lt;!&ndash;注入相关页面访问url&ndash;&gt;
         <property name="loginUrl" value="/login.html" />
 
-        <!--注入url拦截规则-->
+        &lt;!&ndash;注入url拦截规则&ndash;&gt;
         <property name="filterChainDefinitions">
             <value>
                 /Css/**=anon
@@ -74,15 +74,15 @@
         </property>
 
     </bean>
-    <!--注册安全管理对象-->
+    &lt;!&ndash;注册安全管理对象&ndash;&gt;
     <bean id="securityManager" class="org.apache.shiro.mgt.DefaultSecurityManager">
         <property name="realm" ref="userRealm"/>
-        <!--注入缓存管理器-->
+        &lt;!&ndash;注入缓存管理器&ndash;&gt;
         <property name="cacheManager" ref="cacheManager"/>
 
     </bean>
-    <!--自定义realm-->
-    <bean id="userRealm" class="hbue.it.config.UserRealm"></bean>
+    &lt;!&ndash;自定义realm&ndash;&gt;
+    <bean id="userRealm" class="hbue.it.config.UserRealm"></bean>-->
 
     <!--手动指定cookie-->
     <bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">

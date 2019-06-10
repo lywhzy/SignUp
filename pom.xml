@@ -427,5 +427,14 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+        <resources>
+            <resource>
+                <directory>webapp/img</directory>
+                <includes>
+                    <include>*.*</include>
+                </includes>
+            </resource>
+        </resources>
     </build>
+
 </project>

@@ -182,7 +182,6 @@
                 <!--</div>-->
             </div>
         </div>
-        <!--模态窗口-->
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" style="width: 312px;height: 350px;top: 20%">
                 <div class="modal-content">
@@ -192,18 +191,18 @@
                     </div>
                     <div class="modal-body" style="height: 150px; margin-top: 32px">
                         <form>
-                            <div align="center"><span class="glyphicon glyphicon-user"></span><input type="text"></div>
+                            <div align="center"><span class="glyphicon glyphicon-user"></span><input id="username" type="text"></div>
                             <br/>
-                            <div align="center"><span class="glyphicon glyphicon-lock"></span><input type="password"></div>
+                            <div align="center"><span class="glyphicon glyphicon-lock"></span><input id="password" type="password"></div>
                         </form>
                         <div style="display: none"><br/><span>验证码</span><input type="text"></div>
                         <a href="#" style="float: left;margin: 5px 4px 3px auto; font-size: 15px">忘记密码</a>
-                        <a href="#" style="float: right;margin: 5px 4px 3px auto; font-size: 15px">注册</a>
+                        <a href="register.jsp" style="float: right;margin: 5px 4px 3px auto; font-size: 15px">注册</a>
                         <br/>
                     </div>
                     <div class="modal-footer">
                         <button data-dismiss="modal" class="btn btn-default" type="button" style="float: right;margin: 2px 20px">关闭</button>
-                        <button class="btn btn-primary" type="button" style="float: left;margin: 2px 20px">确定</button>
+                        <button id="ok" class="btn btn-primary" type="button" style="float: left;margin: 2px 20px">确定</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

@@ -22,10 +22,10 @@
 <script src="${pageContext.request.contextPath}/Js/editRegistrationInformation.js"></script>
 <!-- 網狀特效2 -->
 <!--内容-->
-<div id="container">
+<div id="container" status="${status}" contest="${cid}">
     <div id="logo">
         <img id="logoimg" src="${pageContext.request.contextPath}/img/logo1.png">
-        <p>黄紫移，<button id="exit">退出</button></p>
+        <p>${user.name}，<button id="exit">退出</button></p>
     </div>
     <div id="content">
         <form id="form">

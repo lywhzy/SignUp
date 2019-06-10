@@ -1,30 +1,23 @@
 var form;
 
 
-// $(document).ready(function(){
-//     form = $("#form");
-//     // var list =
-//    //  $(window).on("load",function () {
-//    //
-//    // });
-//     $("#addInput").click(function () {
-//         addI();
-//     });
-//     $("#addRadio").click(function(){
-//         addR();
-//     });
-//     $("#addoption").click(function () {
-//        addO();
-//     });
-// });
+$(document).ready(function(){
+    var status = $("#container").attr("status");
+    if(status==0){
+        $("#ex").text("提交");
+    }else{
+        $("#ex").text("取消");
+    }
+});
 
 
 
 
 function addI(st,id) {
     var td = $("#"+st);
+    var status = $("#container").attr("status");
     var input = $("<input>");
-    var value = getValue(1,id);
+    var value = getValue(id,status);
     input.css({
         "type" : "text",
         "width" : "300px",
@@ -39,7 +32,7 @@ function addI(st,id) {
 function addR(st,id){
     var td = $("#"+st);
     var p=document.createElement("p");
-    var val = getValue(1,id);
+    var val = getValue(id);
     var list = getAlternative(id);
     $.each(list,function (i,value) {
         if(i==0) p.innerHTML='<label>' + value.value + '</label>';
@@ -54,6 +47,7 @@ function addR(st,id){
 }
 function addO(st,id){
     var td = $("#"+st);
+    var status = $("#container").attr("status");
     var select = $("<select></select>");
     var span = $("<span></span>");
     select.css({
@@ -64,7 +58,7 @@ function addO(st,id){
     select.attr("class","cis");
     select.attr("cid",id);
     var list = getAlternative(id);
-    var val = getValue(1,id);
+    var val = getValue(id,status);
     var option = $("<option></option>").text(val);
     select.append(option);
     $.each(list,function (i,value) {
@@ -78,11 +72,11 @@ function addO(st,id){
     td.append(select);
 }
 
-function getValue(uid,cid) {
+function getValue(cid,status) {
     var val;
     $.ajax({
         url : "getValue",
-        data : {"uid":uid,"cid":cid},
+        data : {"cid":cid,"status":status},
         type : "POST",
         async : false,
         success : function (value) {
@@ -91,6 +85,8 @@ function getValue(uid,cid) {
     });
     return val;
 }
+
+
 
 function getAlternative(cid) {
     var list = new Array();
@@ -175,44 +171,121 @@ $(function () {
    });
 
     $("#update").click(function () {
-        $(".cii").each(function () {
-            // console.log($(this).attr("cid"));
-            // console.log($(this).val());
-            var cid = $(this).attr("cid");
-            var value = $(this).val();
-            $.ajax({
-                url : "updateCv",
-                data : {"cid" : cid,"uid" : 1,"value" : value},
-                type : "POST",
-                success : function (data) {
-                    
-                }
-            });
-        });
-        $(".cis").each(function () {
-            var cid = $(this).attr("cid");
-            var value = $(this).val();
-            var input = $(this).parent("td").find("input");
-            if(value=="自定义"){
-                value = input.val();
-            }
-            $.ajax({
-                url : "updateCv",
-                data : {"cid" : cid,"uid" : 1,"value" : value},
-                type : "POST",
-                success : function (data) {
+        var status = $("#container").attr("status");
+        if(status==1){
+            $(".cii").each(function () {
+                // console.log($(this).attr("cid"));
+                // console.log($(this).val());
+                var cid = $(this).attr("cid");
+                var value = $(this).val();
+                $.ajax({
+                    url : "updateCv",
+                    data : {"cid" : cid,"value" : value,"custom" : 0},
+                    type : "POST",
+                    success : function (data) {
 
-                }
+                    }
+                });
             });
-        });
-       alert("修改成功");
+            $(".cis").each(function () {
+                var cid = $(this).attr("cid");
+                var value = $(this).val();
+                var input = $(this).parent("td").find("input");
+                var custom = 0;
+                if(value=="自定义"){
+                    value = input.val();
+                    custom = 1;
+                }
+                $.ajax({
+                    url : "updateCv",
+                    data : {"cid" : cid,"value" : value,"custom" : custom},
+                    type : "POST",
+                    success : function (data) {
+
+                    }
+                });
+            });
+            alert("修改成功");
+        }else{
+            $(".cii").each(function () {
+                // console.log($(this).attr("cid"));
+                // console.log($(this).val());
+                var cid = $(this).attr("cid");
+                var value = $(this).val();
+                $.ajax({
+                    url : "keep",
+                    data : {"cid" : cid,"value" : value,"custom" : 0},
+                    type : "POST",
+                    success : function (data) {
+
+                    }
+                });
+            });
+            $(".cis").each(function () {
+                var cid = $(this).attr("cid");
+                var value = $(this).val();
+                var input = $(this).parent("td").find("input");
+                var custom = 0;
+                if(value=="自定义"){
+                    value = input.val();
+                    custom = 1;
+                }
+                $.ajax({
+                    url : "keep",
+                    data : {"cid" : cid,"value" : value,"custom" : custom},
+                    type : "POST",
+                    success : function (data) {
+
+                    }
+                });
+            });
+            alert("保存成功");
+        }
+
     });
 
 
 
     $("#ex").click(function () {
-        var uid = 1;
-        window.location.replace("listMyContest?id=" + uid);
+        var status = $("#container").attr("status");
+        var contest = $("#container").attr("contest");
+        if(status==1){
+            window.location.replace("listMyContest?start=0");
+        }else{
+            $(".cii").each(function () {
+                // console.log($(this).attr("cid"));
+                // console.log($(this).val());
+                var cid = $(this).attr("cid");
+                var value = $(this).val();
+                $.ajax({
+                    url : "signup",
+                    data : {"cid" : cid,"value" : value,"custom" : 0,"contest" : contest},
+                    type : "POST",
+                    success : function (data) {
+
+                    }
+                });
+            });
+            $(".cis").each(function () {
+                var cid = $(this).attr("cid");
+                var value = $(this).val();
+                var input = $(this).parent("td").find("input");
+                var custom = 0;
+                if(value=="自定义"){
+                    value = input.val();
+                    custom = 1;
+                }
+                $.ajax({
+                    url : "signup",
+                    data : {"cid" : cid,"value" : value,"custom" : custom,"contest" : contest},
+                    type : "POST",
+                    success : function (data) {
+
+                    }
+                });
+            });
+            window.location.replace("listMyContest?start=0");
+        }
     })
 
 });

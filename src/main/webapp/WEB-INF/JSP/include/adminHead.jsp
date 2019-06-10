@@ -14,6 +14,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Css/bootstrap/3.3.6/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/Css/bootstrap.min.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/Css/test.css">
     <script src="${pageContext.request.contextPath}/Js/jquery.min.js"></script>
     <script src="${pageContext.request.contextPath}/Js/bootstrap.min.js"></script>
 </head>

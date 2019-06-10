@@ -2,6 +2,7 @@ package hbue.it.mapper;
 
 import hbue.it.pojo.Column_value;
 import hbue.it.pojo.Column_valueExample;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -24,4 +25,7 @@ public interface Column_valueMapper {
     void deleteByUCId(@Param("uid") int uid, @Param("cid") int cid);
 
     void updateByUCId(Column_value column_value);
+
+    @Delete("delete from column_value where uid=#{uid} and cid=#{cid}")
+    void deleteColumn_value(Column_value column_value);
 }

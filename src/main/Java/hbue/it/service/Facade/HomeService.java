@@ -1,4 +1,4 @@
-package hbue.it.service;
+package hbue.it.service.Facade;
 
 import hbue.it.pojo.Contest;
 

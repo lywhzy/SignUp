@@ -21,4 +21,12 @@
         <property name="maxUploadSize" value="102400"/>
         <property name="defaultEncoding" value="UTF-8"/>
     </bean>
+
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/*"/>
+            <bean class="hbue.it.Interceptor.testInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

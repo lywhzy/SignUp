@@ -20,4 +20,11 @@ public class ContestMapperTest {
         list.forEach((contest)->{System.out.println(contest.toString());});
     }
 
+    @Test
+    public void test1(){
+        ApplicationContext context = new ClassPathXmlApplicationContext("Spring/ApplicationContext.xml");
+        ContestMapper contestMapper = context.getBean(ContestMapper.class);
+        System.out.println(contestMapper.selectRelation(2,3));
+    }
+
 }

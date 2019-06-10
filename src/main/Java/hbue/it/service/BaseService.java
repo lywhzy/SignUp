@@ -7,10 +7,10 @@ import java.util.List;
  * @author lyw
  */
 
-public interface BaseService {
-    Object getObject(int id);
-    void update(Object obj);
+public interface BaseService<T> {
+    T get(int id);
+    void update(T obj);
     void delete(int id);
-    void insert(Object obj);
-    List<Object> getAll();
+    void insert(T obj);
+    List<T> getAll();
 }

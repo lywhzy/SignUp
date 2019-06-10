@@ -48,6 +48,7 @@
         <img id="logoimg" src="${pageContext.request.contextPath}/img/logo1.png">
         <p>${user.name}，<button id="exit">退出</button></p>
     </div>
+    <%@include file="../include/adminNavigator.jsp"%>
     <h2 align="center" id="h4">您的比赛信息如下</h2>
     <div id="content">
         <table class="table table-hover table-bordered">
@@ -62,7 +63,7 @@
             <c:forEach items="${list}" var="con">
                 <tr id="${con.id}">
                     <td>${con.name}
-                        <a href="editMyContest?uid=${user.id}&cid=${con.id}" class="a1" value="${con.status}">
+                        <a href="editMyContest?cid=${con.id}&status=1" class="a1" value="${con.status}">
                             <span class="glyphicon glyphicon-edit"></span>
                         </a>
                     </td>
@@ -78,6 +79,10 @@
             </c:forEach>
             </tbody>
         </table>
+
+        <div class="pager">
+            <%@ include file="../include/adminPage.jsp"%>
+        </div>
     </div>
 </div>
 

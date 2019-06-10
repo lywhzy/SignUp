@@ -1,11 +1,9 @@
 package hbue.it.controller;
 
-import hbue.it.exception.ContestNotFoundException;
-import hbue.it.exception.UserNotFoundException;
 import hbue.it.pojo.*;
-import hbue.it.service.HomeService;
-import hbue.it.service.MyContestService;
-import hbue.it.service.SignUpService;
+import hbue.it.service.Facade.ContestFacadeService;
+import hbue.it.service.Facade.SignUpFacadeService;
+import hbue.it.util.Page;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -15,53 +13,52 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.util.List;
 
 @Controller
-public class UserController {
+public class UserController extends BaseController{
     @Autowired
-    private MyContestService myContestService;
+    private ContestFacadeService contestFacadeService;
 
     @Autowired
-    private SignUpService signUpService;
-    @Autowired
-    private HomeService homeService;
+    private SignUpFacadeService signUpFacadeService;
+
 
 
     @RequestMapping("listMyContest")
-    public String listMyContest(User user, Model model){
-        List<Contest> list = myContestService.listContestByid(user.getId(),0);
+    public String listMyContest(Model model,int start){
+        User user = (User) session.getAttribute("user");
+        List<Contest> list = contestFacadeService.listContestByid(user.getId(),start);
         model.addAttribute("list",list);
-        model.addAttribute("user",user);
+        Page page = new Page(list,start);
+        model.addAttribute("page",page);
         return "admin/myConpetition";
     }
 
     @RequestMapping("editMyContest")
-    public String editMyContestInfo(int uid,int cid,Model model){
-        List<Column_info> list = signUpService.listAllInfo(cid);
+    public String editMyContestInfo(int cid,Model model,int status){
+        User user = (User) session.getAttribute("user");
+        List<Column_info> list = signUpFacadeService.listAllInfo(cid);
+        status = contestFacadeService.judgeUCStatus(user.getId(),cid,status);
         model.addAttribute("list",list);
+        model.addAttribute("status",status);
+        model.addAttribute("cid",cid);
         return "admin/editRegistrationInformation";
     }
 
     /**
      *
-     * @param session
      * @param contest
-     * @param request
      * @return
      * @throws IOException
      */
     @RequestMapping("downLoad")
-    public ResponseEntity<byte[]> testResponseEntity(HttpSession session, Contest contest, HttpServletRequest request) throws IOException {
+    public ResponseEntity<byte[]> testResponseEntity(Contest contest) throws IOException {
         String attachmentId = String.valueOf(contest.getAttachment());
         String fileName = attachmentId + "_" + contest.getName() + ".rar";
         String oldName = contest.getName()+".rar";
@@ -74,7 +71,7 @@ public class UserController {
         }
 
         HttpHeaders headers = new HttpHeaders();
-        if(getBrowser(request).equals("FF")){
+        if(getBrowser().equals("FF")){
             headers.setContentDispositionFormData("attachment", new String(oldName.getBytes("UTF-8"),"iso-8859-1"));
         }else{
             headers.setContentDispositionFormData("attachment", URLEncoder.encode(oldName,"UTF-8"));
@@ -86,44 +83,18 @@ public class UserController {
         return response;
     }
 
-    @RequestMapping("getCharacterization")
-    @ResponseBody
-    public List<Contest> getTopContest(){
-        List<Contest> list = homeService.getTopCharacterization();
-        return list;
-    }
-
-    @RequestMapping(value = "getValue",produces = "text/html;charset=UTF-8")
-    @ResponseBody
-    public String getColumn_value(int uid,int cid) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException{
-        String value = signUpService.sychroData(uid, cid);
-        return value;
-    }
-
-    @RequestMapping(value = "getAlternative")
-    @ResponseBody
-    public List<Alternative> getAlternative(int cid) throws ContestNotFoundException {
-        List<Alternative> list = signUpService.listAlternativeByCid(cid);
-        return list;
-    }
-
-    @RequestMapping("updateCv")
-    @ResponseBody
-    public String updateColumn_value(Column_value column_value,int custom){
-        try{
-            signUpService.update(column_value,custom);
-        }catch (ContestNotFoundException e){
-            return "false";
-        }catch (UserNotFoundException e){
-            return "false";
-        }
-        return "success";
+    @RequestMapping("listContest")
+    public String listContests(Model model,int start){
+        User user = (User) session.getAttribute("user");
+        List<Contest> list = contestFacadeService.listContests(user,start);
+        Page page = new Page(3,start,list);
+        model.addAttribute("list",list);
+        model.addAttribute("page",page);
+        return "admin/Competitions";
     }
 
 
-
-
-    private String getBrowser(HttpServletRequest request){
+    private String getBrowser(){
         String agent = request.getHeader("USER-AGENT").toLowerCase();
         if(agent!=null){
             if(agent.indexOf("msie")>0) return "IE";

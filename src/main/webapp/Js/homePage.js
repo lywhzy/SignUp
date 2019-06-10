@@ -22,8 +22,11 @@ $(document).ready(function(){
                         add(i,list[i].name,list[i].characterization);
                         $("#"+i).attr("cid",list[i].id);
                     }
-                    else
+                    else{
                         add(i,"敬请期待","");
+                        $("#"+i).hide();
+                    }
+
                 }
             }
         });
@@ -43,12 +46,17 @@ function add(i,name,str){
 $(function () {
     $(".disp").click(function () {
         var cid = $(this).attr("cid");
-        if(!cid.eq(""))
-        window.location.href = "editMyContest?uid=1&cid="+cid;
+        if(cid.length>0)
+        window.location.href = "editMyContest?cid="+cid+"&status=-1";
     });
     $("#myCompe").click(function () {
-        window.location.href = "listMyContest?id=1";
+        window.location.href = "listMyContest?start=0";
     });
+
+    $("#signUp").click(function () {
+        window.location.href = "listContest?start=0";
+    })
+
 });
 
 

@@ -46,4 +46,31 @@ public class UserServiceImpl implements UserService {
     public User_info getInfo(int uid) {
         return user_infoMapper.selectByPrimaryKey(uid);
     }
+
+    // 虽然报错但项目运行没有问题，不加注入会显示空指针异常
+
+    @Override
+    public int insertUser(User record) {
+        return userMapper.insert(record);
+    }
+
+    @Override
+    public int updateByPrimaryKey(User record) {
+        return userMapper.updateByPrimaryKey(record);
+    }
+
+    @Override
+    public User selLogin(String name, String password) {
+        User user = null;
+        //userList.remove(null);
+        if (name != null && password != null && !"".equals(name) && !"".equals(password)){
+            try{
+                user = (User) userMapper.selLogin(name, password);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+
+        }
+        return user;
+    }
 }

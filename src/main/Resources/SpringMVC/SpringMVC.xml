@@ -29,4 +29,7 @@
             <bean class="hbue.it.Interceptor.testInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+    <!--包括Kaptcha配置文件-->
+    <import resource="classpath:spring-kaptcha.xml"/>
 </beans>

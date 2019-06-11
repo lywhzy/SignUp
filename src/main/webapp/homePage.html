@@ -28,7 +28,7 @@
                         $("#user").html("未登录");
                     }
                 }
-            })
+            });
 
             $("#login").click(function () {
                 $.ajax({
@@ -52,7 +52,7 @@
                                     type:"post",
                                     async:false,
                                     success:function (data) {
-                                        window.location.href = "homePage.jsp";
+                                        window.location.href = "homePage.html";
                                     }
                                 })
                             })
@@ -63,7 +63,7 @@
                         }
                     }
                 })
-            })
+            });
 
             $("#logout").click(function () {
                 $.ajax({
@@ -73,7 +73,7 @@
                     success:function (data) {
                         if (data == "SUCCESS"){
                             alert("退出成功");
-                            window.location.href = "homePage.jsp";
+                            window.location.href = "homePage.html";
                         }
                     }
                 })
@@ -118,6 +118,8 @@
             <button type="button" class="btn btn-default" id="login"  data-toggle="modal" data-target="#myModal">登    录</button>
             <button type="button" class="btn btn-default" id="myCompe">我的大赛</button>
             <button type="button" class="btn btn-default" id="signUp">报名大赛</button>
+            <a id="user">未登录</a>
+            <a id="logout">登出</a>
         </div>
         <!--轮播-->
         <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">

@@ -3,7 +3,6 @@ package hbue.it.controller;
 import hbue.it.pojo.*;
 import hbue.it.service.Facade.ContestFacadeService;
 import hbue.it.service.Facade.SignUpFacadeService;
-import hbue.it.service.UserService;
 import hbue.it.util.Page;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +15,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
-import hbue.it.util.JavaEmailSenderUtil;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
-import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.security.GeneralSecurityException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class UserController extends BaseController {
@@ -44,9 +34,6 @@ public class UserController extends BaseController {
 
     @Autowired
     private SignUpFacadeService signUpFacadeService;
-
-    @Autowired
-    private UserService userService;
 
     @Autowired
     private Producer kaptchaProducer;

@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
@@ -23,7 +22,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
@@ -140,7 +138,7 @@ public class RestUserController extends  BaseController{
         if (null != user) {
             System.out.println("session");
         }
-        if (null != user) {
+        if (null != user1) {
             System.out.println("cookie");
         }
         if (null != user || null != user1) {

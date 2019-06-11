@@ -17,9 +17,11 @@ public class testInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-//        HttpSession session = httpServletRequest.getSession();
-//        User user = userMapper.selectByPrimaryKey(2);
-//        session.setAttribute("user",user);
+        HttpSession session = httpServletRequest.getSession();
+        User user = (User) session.getAttribute("user");
+        if(user!=null){
+            return true;
+        }
         return true;
     }
 

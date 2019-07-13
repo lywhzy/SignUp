@@ -38,7 +38,12 @@ public class UserController extends BaseController {
     @Autowired
     private Producer kaptchaProducer;
 
-
+    /**
+     * 返回用户报名的比赛
+     * @param model SpringMVC模型
+     * @param start 指定当前是第几页
+     * @return
+     */
     @RequestMapping("listMyContest")
     public String listMyContest(Model model, int start) {
         User user = (User) session.getAttribute("user");
@@ -49,6 +54,13 @@ public class UserController extends BaseController {
         return "admin/myConpetition";
     }
 
+    /**
+     *
+     * @param cid 比赛id
+     * @param model SpringMVC模型
+     * @param status  用户报名状态
+     * @return
+     */
     @RequestMapping("editMyContest")
     public String editMyContestInfo(int cid, Model model, int status) {
         User user = (User) session.getAttribute("user");
@@ -61,8 +73,9 @@ public class UserController extends BaseController {
     }
 
     /**
-     * @param contest
-     * @return
+     * 下载比赛附件
+     * @param contest 该附件对应的比赛
+     * @return Byte数组
      * @throws IOException
      */
     @RequestMapping("downLoad")
@@ -91,6 +104,12 @@ public class UserController extends BaseController {
         return response;
     }
 
+    /**
+     * 返回所有比赛
+     * @param model SpringMVC模型
+     * @param start 指定当前是第几页
+     * @return
+     */
     @RequestMapping("listContest")
     public String listContests(Model model, int start) {
         User user = (User) session.getAttribute("user");
@@ -101,7 +120,10 @@ public class UserController extends BaseController {
         return "admin/Competitions";
     }
 
-
+    /**
+     * 判断当前浏览器类型
+     * @return  返回浏览器类型
+     */
     private String getBrowser() {
         String agent = request.getHeader("USER-AGENT").toLowerCase();
         if (agent != null) {

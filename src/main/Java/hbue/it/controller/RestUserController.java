@@ -41,12 +41,25 @@ public class RestUserController extends  BaseController{
     @Autowired
     private UserService userService;
 
+    /**
+     * 返回当前热门比赛的列表
+     * @return
+     */
     @RequestMapping("getCharacterization")
     public List<Contest> getTopContest(){
         List<Contest> list = homeService.getTopCharacterization();
         return list;
     }
 
+    /**
+     * 根据比赛栏目id返回该栏目对应的值
+     * @param cid 比赛栏目id
+     * @param status 是否第一次报名该比赛
+     * @return
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws InvocationTargetException
+     */
     @RequestMapping(value = "getValue",produces = "text/html;charset=UTF-8")
     public String getColumn_value(int cid,int status) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         User user = (User) session.getAttribute("user");
@@ -60,12 +73,24 @@ public class RestUserController extends  BaseController{
         return value;
     }
 
+    /**
+     *  根据比赛栏目id获得该栏目备选值
+     * @param cid 比赛栏目id
+     * @return
+     * @throws ContestNotFoundException
+     */
     @RequestMapping(value = "getAlternative")
     public List<Alternative> getAlternative(int cid) throws ContestNotFoundException {
         List<Alternative> list = signUpFacadeService.listAlternativeByCid(cid);
         return list;
     }
 
+    /**
+     *  修改用户该比赛的栏目值
+     * @param column_value
+     * @param custom 该栏目备选值是否根据用户提交来添加
+     * @return
+     */
     @RequestMapping("updateCv")
     public String updateColumn_value(Column_value column_value, int custom){
         try{
@@ -80,6 +105,12 @@ public class RestUserController extends  BaseController{
         return "success";
     }
 
+    /**
+     * 保存当前用户提交
+     * @param column_value
+     * @param custom 该栏目备选值是否根据用户提交来添加
+     * @return
+     */
     @RequestMapping("keep")
     public String keepColumn_value(Column_value column_value,int custom){
         try{
@@ -94,6 +125,13 @@ public class RestUserController extends  BaseController{
         return "success";
     }
 
+    /**
+     * 提交用户报名数据
+     * @param column_value
+     * @param custom 该栏目备选值是否根据用户提交来添加
+     * @param contest 比赛id
+     * @return
+     */
     @RequestMapping("signup")
     public String signup(Column_value column_value,int custom,int contest){
         try{
@@ -108,7 +146,7 @@ public class RestUserController extends  BaseController{
         return "success";
     }
 
-    @RequestMapping(value = "/isLogin", method = RequestMethod.POST)
+    @RequestMapping(value = "/isLogin", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
     public String isLogin() throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -150,7 +188,7 @@ public class RestUserController extends  BaseController{
 //            out.println(user.getName());
 //            out.flush();
 //            out.close();
-            return "SUCCESS";
+            return user.getName();
             // response.sendRedirect(request.getContextPath() + "");
         } else {
             System.out.println("未登录");
@@ -218,8 +256,8 @@ public class RestUserController extends  BaseController{
             System.out.println("登陆成功!");
             // 跳转到主页,返回字符串success
             // ...
-            response.sendRedirect(request.getContextPath() + "/homePage.jsp");
-            return null;
+            //response.sendRedirect(request.getContextPath() + "/homePage.html");
+            return user.getName();
 
         } else {
             session.setAttribute("msg", "用户名或密码错误!");

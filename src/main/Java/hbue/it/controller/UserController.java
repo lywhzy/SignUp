@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
@@ -138,8 +139,10 @@ public class UserController extends BaseController {
 
 
 
-
-    // 使用Kaptcha框架
+    /**
+     * 使用Kaptcha框架
+     * @return ModelAndView
+     */
     @RequestMapping(value = "/Kaptcha")
     public ModelAndView handleRequest() {
         // 清除浏览器缓存
@@ -180,6 +183,10 @@ public class UserController extends BaseController {
         return null;
     }
 
+    /**
+     * 验证图片验证码
+     * @return
+     */
     @RequestMapping(value = "/checkKaptcha", method = RequestMethod.POST)
     @ResponseBody
     public String checkKaptcha() {

@@ -148,6 +148,11 @@ public class RestUserController extends  BaseController{
         return "success";
     }
 
+    /**
+     * 判断是否登录
+     * @return 用户名
+     * @throws IOException
+     */
     @RequestMapping(value = "/isLogin", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String isLogin() throws IOException {
         request.setCharacterEncoding("UTF-8");
@@ -200,9 +205,14 @@ public class RestUserController extends  BaseController{
         }
     }
 
-    // 登陆
+    /**
+     * 登陆
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     */
     @RequestMapping(value = "/Login", method = RequestMethod.POST)
-    public String login(Model model) throws IOException, ServletException {
+    public String login() throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         String username = request.getParameter("username");
@@ -273,7 +283,10 @@ public class RestUserController extends  BaseController{
         }
     }
 
-    // 登出映射
+    /**
+     * 登出
+     * @return
+     */
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String outLogin() {
         if (null != session) {
@@ -327,7 +340,13 @@ public class RestUserController extends  BaseController{
         return "";
     }
 
-    // 注册登陆
+    /**
+     * 注册
+     * @param user
+     * @return
+     * @throws IOException
+     * @throws ServletException
+     */
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public String insert(User user) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
@@ -367,6 +386,12 @@ public class RestUserController extends  BaseController{
 
     }
 
+    /**
+     * 邮箱发送
+     * @return
+     * @throws GeneralSecurityException
+     * @throws MessagingException
+     */
     @RequestMapping(value = "/mail")
     public String mailSucc() throws GeneralSecurityException, MessagingException {
         String toEMAIL = request.getParameter("email"); // 对方邮箱

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.MessagingException;
@@ -22,6 +23,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
@@ -146,7 +148,7 @@ public class RestUserController extends  BaseController{
         return "success";
     }
 
-    @RequestMapping(value = "/isLogin", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/isLogin", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
     public String isLogin() throws IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
@@ -160,10 +162,11 @@ public class RestUserController extends  BaseController{
         if (null != cookies) {
             for (Cookie c : cookies) {
                 if ("loginCookie".equals(c.getName())) {
-
+                    // 取出用户名和密码
                     str = c.getValue().split("@");
                     if (null != str && null != str[0] && str[1] != null) {
                         try {
+                            // 验证登录信息
                             user1 = userService.selLogin(str[0], str[1]);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -197,6 +200,7 @@ public class RestUserController extends  BaseController{
         }
     }
 
+    // 登陆
     @RequestMapping(value = "/Login", method = RequestMethod.POST)
     public String login(Model model) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");
@@ -205,7 +209,7 @@ public class RestUserController extends  BaseController{
         String password = request.getParameter("password");
         System.out.println(username + password);
         User user = null;
-        try {
+        try { // 验证登录
             user = userService.selLogin(username, password);
         } catch (Exception e) {
             e.printStackTrace();
@@ -269,6 +273,7 @@ public class RestUserController extends  BaseController{
         }
     }
 
+    // 登出映射
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public String outLogin() {
         if (null != session) {
@@ -276,14 +281,14 @@ public class RestUserController extends  BaseController{
                 User user = (User) session.getAttribute("user");
                 // 清除session
                 session.removeAttribute("user");
-                if ((User) session.getAttribute("user") != null) {
+                /*if ((User) session.getAttribute("user") != null) {
                     System.out.println("2");
-                }
+                }*/
                 ServletContext application = session.getServletContext();
                 @SuppressWarnings("unchecked")
                 Map<String, Object> loginMap = (Map<String, Object>) application.getAttribute("loginMap");
 
-                if (null != user) {
+                if (null != user && null != loginMap && loginMap.containsValue(user.getId().toString())) {
                     loginMap.remove(user.getId().toString());
                 }
                 application.setAttribute("loginMap", loginMap);
@@ -295,32 +300,25 @@ public class RestUserController extends  BaseController{
 
                 Cookie[] cookies = request.getCookies();
                 String[] str = null;
+                // 清除cookie
                 for (Cookie c : cookies) {
                     if ("loginCookie".equals(c.getName())) {
                         str = c.getValue().split("@");
-                        if (str[0].equals(user.getName())) {
-                            c.setMaxAge(0);
-                            c.setPath(request.getContextPath());
-                            response.addCookie(c);
+                        if (null != user){
+                            if (str[0].equals(user.getName())) {
+                                c.setMaxAge(0);
+                                c.setPath(request.getContextPath());
+                                response.addCookie(c);
 
-                            if (null != c) {
-                                System.out.println(c.getValue());
+                                if (null != c) {
+                                    System.out.println(c.getValue());
+                                }
                             }
                         }
 
-                    }
-                }
-
-                for (Cookie c : cookies) {
-                    if ("loginCookie".equals(c.getName())) {
-                        str = c.getValue().split("@");
-                        if (str[0].equals(user.getName())) {
-                            System.out.println("cookie清除");
-                        }
 
                     }
                 }
-
                 return "SUCCESS";
             } catch (Exception e) {
                 e.printStackTrace();
@@ -329,6 +327,7 @@ public class RestUserController extends  BaseController{
         return "";
     }
 
+    // 注册登陆
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public String insert(User user) throws IOException, ServletException {
         request.setCharacterEncoding("UTF-8");

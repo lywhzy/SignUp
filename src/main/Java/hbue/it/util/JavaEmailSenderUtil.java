@@ -1,5 +1,9 @@
 package hbue.it.util;
 
+/**
+ * 邮箱发送工具类
+ */
+
 import com.sun.mail.util.MailSSLSocketFactory;
 
 import javax.mail.*;

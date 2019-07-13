@@ -3,8 +3,12 @@ package hbue.it.filter;
 import hbue.it.pojo.User;
 import hbue.it.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -13,8 +17,8 @@ import java.io.IOException;
 /**
  * 登陆拦截器
  */
-//@WebFilter("/homePage.html")
-/*@Component
+/*@WebFilter("/homePage.html")
+@Component
 @Order*/
 public class UserLoginFilter implements Filter {
 
@@ -35,7 +39,7 @@ public class UserLoginFilter implements Filter {
         // 如果是登录有关操作的，不拦截
         String path = request.getRequestURI();
 
-        if (path.contains("login")){
+        if (path.contains("homePage")){
             // 放行
             System.out.println("path:" + path);
             chain.doFilter(request,response);
@@ -55,7 +59,7 @@ public class UserLoginFilter implements Filter {
 
         // session失效，查看cookie
         // 获取cookie，拿到账号密码进行判断，对了放行，并将用户对象存储到session中
-        /*Cookie[] cookies = request.getCookies();
+        Cookie[] cookies = request.getCookies();
         String[] str = new String[10];
         if (null != cookies){
             for (Cookie c : cookies){
@@ -68,7 +72,7 @@ public class UserLoginFilter implements Filter {
         // 验证cookie信息是否正确
         // UserService userService = new UserServiceImpl();
         User user1 = null;
-        if (!"".equals(str[0]) && !"".equals(str[1])){
+        if (!"".equals(str[0]) && !"".equals(str[1]) && null != str[0] && null != str[1]){
             user1 = userService.selLogin(str[0], str[1]);
         }
 
@@ -77,7 +81,7 @@ public class UserLoginFilter implements Filter {
             request.getSession().setAttribute("user", user);
             chain.doFilter(request, response);
             return;
-        }*/
+        }
     }
 
     @Override

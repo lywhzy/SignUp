@@ -181,21 +181,23 @@ public class UserController extends BaseController {
     }
 
     @RequestMapping(value = "/checkKaptcha", method = RequestMethod.POST)
+    @ResponseBody
     public String checkKaptcha() {
         // 获取传入的验证码
-        String code = request.getParameter("kaptcha_code");
+        String code = request.getParameter("code");
         if (code != null) {
             String sessionCode = (String) session.getAttribute(Constants.KAPTCHA_SESSION_KEY);
             System.out.println(code);
             System.out.println(sessionCode);
-            if (!sessionCode.isEmpty() && !code.equalsIgnoreCase(sessionCode)) {
+            if (!sessionCode.isEmpty() && code.equalsIgnoreCase(sessionCode)) {
                 System.out.println("验证成功!");
-                return "login";
+                return "SUCCESS";
             } else {
                 System.out.println("验证失败!");
+                return "FAIL";
             }
         }
-        return "login";
+        return "FAIL";
     }
 
 

@@ -47,8 +47,6 @@ public class UserServiceImpl implements UserService {
         return user_infoMapper.selectByPrimaryKey(uid);
     }
 
-    // 虽然报错但项目运行没有问题，不加注入会显示空指针异常
-
     @Override
     public int insertUser(User record) {
         return userMapper.insert(record);

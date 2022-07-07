@@ -334,7 +334,7 @@
 
             <artifactId>spring-expression</artifactId>
 
-            <version>4.0.4.RELEASE</version>
+            <version>5.2.21.RELEASE</version>
 
         </dependency>
 
